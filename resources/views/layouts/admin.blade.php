@@ -335,9 +335,9 @@
             </li>
 
             <li>
-                <a href="#">
-                    <span class="menu-icon">🏆</span>
-                    <span class="menu-text">Kategori Prestasi</span>
+                <a href="{{ route('admin.kategori-prestasi.index') }}" class="{{ request()->routeIs('admin.kategori-prestasi.*') ? 'active' : '' }}">
+                <span class="menu-icon">🏆</span>
+                <span class="menu-text">Kategori Prestasi</span>
                 </a>
             </li>
 
