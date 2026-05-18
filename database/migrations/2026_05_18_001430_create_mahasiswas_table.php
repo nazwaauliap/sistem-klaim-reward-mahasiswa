@@ -27,7 +27,6 @@ return new class extends Migration
             $table->integer('semester');
             $table->string('kelas')->nullable();
             $table->enum('status_mahasiswa', ['Aktif', 'Cuti', 'Lulus', 'Nonaktif'])->default('Aktif');
-            $table->timestamps();
         });
     }
 

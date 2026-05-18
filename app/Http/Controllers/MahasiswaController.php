@@ -9,7 +9,7 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        $mahasiswas = Mahasiswa::latest()->get();
+        $mahasiswas = Mahasiswa::orderBy('id_mhs', 'desc')->get();
 
         return view('mahasiswa.index', compact('mahasiswas'));
     }
@@ -24,15 +24,38 @@ class MahasiswaController extends Controller
         $request->validate([
             'nim' => 'required|unique:mahasiswas,nim',
             'nama' => 'required',
-            'program_studi' => 'required',
-            'angkatan' => 'required',
-            'email' => 'nullable|email',
+            'jenis_kelamin' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'alamat' => 'nullable',
             'no_hp' => 'nullable',
+            'email' => 'nullable|email',
+            'program_studi' => 'required',
+            'fakultas' => 'required',
+            'angkatan' => 'required',
+            'semester' => 'required|integer',
+            'kelas' => 'nullable',
+            'status_mahasiswa' => 'required',
         ]);
 
-        Mahasiswa::create($request->all());
+        Mahasiswa::create($request->only([
+            'nim',
+            'nama',
+            'jenis_kelamin',
+            'tempat_lahir',
+            'tanggal_lahir',
+            'alamat',
+            'no_hp',
+            'email',
+            'program_studi',
+            'fakultas',
+            'angkatan',
+            'semester',
+            'kelas',
+            'status_mahasiswa',
+        ]));
 
-        return redirect()->route('mahasiswa.index')
+        return redirect()->route('admin.mahasiswa.index')
             ->with('success', 'Data mahasiswa berhasil ditambahkan.');
     }
 
@@ -46,15 +69,38 @@ class MahasiswaController extends Controller
         $request->validate([
             'nim' => 'required|unique:mahasiswas,nim,' . $mahasiswa->id_mhs . ',id_mhs',
             'nama' => 'required',
-            'program_studi' => 'required',
-            'angkatan' => 'required',
-            'email' => 'nullable|email',
+            'jenis_kelamin' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'alamat' => 'nullable',
             'no_hp' => 'nullable',
+            'email' => 'nullable|email',
+            'program_studi' => 'required',
+            'fakultas' => 'required',
+            'angkatan' => 'required',
+            'semester' => 'required|integer',
+            'kelas' => 'nullable',
+            'status_mahasiswa' => 'required',
         ]);
 
-        $mahasiswa->update($request->all());
+        $mahasiswa->update($request->only([
+            'nim',
+            'nama',
+            'jenis_kelamin',
+            'tempat_lahir',
+            'tanggal_lahir',
+            'alamat',
+            'no_hp',
+            'email',
+            'program_studi',
+            'fakultas',
+            'angkatan',
+            'semester',
+            'kelas',
+            'status_mahasiswa',
+        ]));
 
-        return redirect()->route('mahasiswa.index')
+        return redirect()->route('admin.mahasiswa.index')
             ->with('success', 'Data mahasiswa berhasil diperbarui.');
     }
 
@@ -62,7 +108,7 @@ class MahasiswaController extends Controller
     {
         $mahasiswa->delete();
 
-        return redirect()->route('mahasiswa.index')
+        return redirect()->route('admin.mahasiswa.index')
             ->with('success', 'Data mahasiswa berhasil dihapus.');
     }
 }

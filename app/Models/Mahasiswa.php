@@ -8,6 +8,8 @@ class Mahasiswa extends Model
 {
     protected $primaryKey = 'id_mhs';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'nim',
         'nama',
