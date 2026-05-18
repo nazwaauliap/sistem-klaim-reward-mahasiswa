@@ -25,7 +25,7 @@
 
                 <div class="mt-4 d-flex flex-wrap gap-3">
                     <a href="#" class="btn btn-role btn-mahasiswa">Login Mahasiswa</a>
-                    <a href="#" class="btn btn-role btn-admin">Login Admin</a>
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-role btn-admin">Login Admin</a>
                 </div>
             </div>
 

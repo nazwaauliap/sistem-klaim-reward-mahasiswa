@@ -250,7 +250,7 @@
                 <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Beranda</a></li>
                 <li class="nav-item"><a class="nav-link" href="#alur">Alur</a></li>
                 <li class="nav-item"><a class="nav-link" href="#fitur">Fitur</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Login Admin</a></li>
+                <a class="nav-link" href="{{ route('admin.dashboard') }}">Login Admin</a>
                 <li class="nav-item"><a class="nav-link" href="#">Login Mahasiswa</a></li>
             </ul>
         </div>
