@@ -402,7 +402,7 @@
             </li>
 
             <li>
-                <a href="#">
+                <a href="{{ route('admin.laporan.index') }}" class="{{ request()->routeIs('admin.laporan.*') ? 'active' : '' }}">
                     <span class="menu-icon">📄</span>
                     <span class="menu-text">Laporan</span>
                 </a>
