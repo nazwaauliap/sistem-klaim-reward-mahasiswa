@@ -12,12 +12,17 @@ class MahasiswaKlaimRewardController extends Controller
 {
     public function index()
     {
+        $idMhs = auth()->user()->id_mhs;
+
         $klaimRewards = KlaimReward::with([
             'prestasiMahasiswa.mahasiswa',
             'prestasiMahasiswa.tingkatPrestasi',
             'periodeKlaim',
             'jenisReward'
         ])
+            ->whereHas('prestasiMahasiswa', function ($query) use ($idMhs) {
+                $query->where('id_mhs', $idMhs);
+            })
             ->orderBy('id_klaim', 'desc')
             ->get();
 
@@ -26,10 +31,13 @@ class MahasiswaKlaimRewardController extends Controller
 
     public function create()
     {
+        $idMhs = auth()->user()->id_mhs;
+
         $prestasiTerverifikasi = PrestasiMahasiswa::with([
             'mahasiswa',
             'tingkatPrestasi'
         ])
+            ->where('id_mhs', $idMhs)
             ->where('status_verifikasi', 'Terverifikasi')
             ->orderBy('id_prestasi', 'desc')
             ->get();
@@ -57,7 +65,12 @@ class MahasiswaKlaimRewardController extends Controller
             'id_reward' => 'required',
         ]);
 
-        $prestasi = PrestasiMahasiswa::findOrFail($request->id_prestasi);
+        $idMhs = auth()->user()->id_mhs;
+
+        $prestasi = PrestasiMahasiswa::where('id_prestasi', $request->id_prestasi)
+            ->where('id_mhs', $idMhs)
+            ->firstOrFail();
+
         $periode = PeriodeKlaim::findOrFail($request->id_periode);
 
         if ($prestasi->status_verifikasi !== 'Terverifikasi') {

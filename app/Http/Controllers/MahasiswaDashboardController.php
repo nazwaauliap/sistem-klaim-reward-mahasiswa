@@ -8,9 +8,17 @@ class MahasiswaDashboardController extends Controller
 {
     public function index()
     {
-        $totalPrestasi = PrestasiMahasiswa::count();
-        $menunggu = PrestasiMahasiswa::where('status_verifikasi', 'Menunggu')->count();
-        $terverifikasi = PrestasiMahasiswa::where('status_verifikasi', 'Terverifikasi')->count();
+        $idMhs = auth()->user()->id_mhs;
+
+        $totalPrestasi = PrestasiMahasiswa::where('id_mhs', $idMhs)->count();
+
+        $menunggu = PrestasiMahasiswa::where('id_mhs', $idMhs)
+            ->where('status_verifikasi', 'Menunggu')
+            ->count();
+
+        $terverifikasi = PrestasiMahasiswa::where('id_mhs', $idMhs)
+            ->where('status_verifikasi', 'Terverifikasi')
+            ->count();
 
         return view('mahasiswa-panel.dashboard', compact(
             'totalPrestasi',

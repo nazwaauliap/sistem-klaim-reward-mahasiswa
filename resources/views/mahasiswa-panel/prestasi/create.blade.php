@@ -27,15 +27,12 @@
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Mahasiswa</label>
-                    <select name="id_mhs" class="form-select" required>
-                        <option value="">-- Pilih Nama Mahasiswa --</option>
-                        @foreach($mahasiswas as $mahasiswa)
-                            <option value="{{ $mahasiswa->id_mhs }}">
-                                {{ $mahasiswa->nim }} - {{ $mahasiswa->nama }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <small class="text-muted">Sementara dipilih manual karena login belum dibuat.</small>
+                    <input type="text" class="form-control"
+                           value="{{ $mahasiswa->nim ?? '-' }} - {{ $mahasiswa->nama ?? '-' }}"
+                           readonly>
+                    <small class="text-muted">
+                        Data mahasiswa otomatis mengikuti akun yang sedang login.
+                    </small>
                 </div>
 
                 <div class="col-md-6 mb-3">
@@ -43,7 +40,7 @@
                     <select name="id_kategori" class="form-select" required>
                         <option value="">-- Pilih Kategori --</option>
                         @foreach($kategoriPrestasis as $kategori)
-                            <option value="{{ $kategori->id_kategori }}">
+                            <option value="{{ $kategori->id_kategori }}" {{ old('id_kategori') == $kategori->id_kategori ? 'selected' : '' }}>
                                 {{ $kategori->nama_kategori }}
                             </option>
                         @endforeach
@@ -55,7 +52,7 @@
                     <select name="id_tingkat" class="form-select" required>
                         <option value="">-- Pilih Tingkat --</option>
                         @foreach($tingkatPrestasis as $tingkat)
-                            <option value="{{ $tingkat->id_tingkat }}">
+                            <option value="{{ $tingkat->id_tingkat }}" {{ old('id_tingkat') == $tingkat->id_tingkat ? 'selected' : '' }}>
                                 {{ $tingkat->nama_tingkat }}
                             </option>
                         @endforeach
@@ -64,29 +61,47 @@
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Nama Kegiatan</label>
-                    <input type="text" name="nama_kegiatan" class="form-control" required>
+                    <input type="text" name="nama_kegiatan" class="form-control"
+                           value="{{ old('nama_kegiatan') }}"
+                           placeholder="Contoh: Lomba Karya Tulis Ilmiah Nasional"
+                           required>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Penyelenggara</label>
-                    <input type="text" name="penyelenggara" class="form-control" required>
+                    <input type="text" name="penyelenggara" class="form-control"
+                           value="{{ old('penyelenggara') }}"
+                           placeholder="Contoh: Universitas Negeri Indonesia"
+                           required>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Tanggal Kegiatan</label>
-                    <input type="date" name="tanggal_kegiatan" class="form-control" required>
+                    <input type="date" name="tanggal_kegiatan" class="form-control"
+                           value="{{ old('tanggal_kegiatan') }}"
+                           required>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Juara</label>
-                    <input type="text" name="juara" class="form-control" placeholder="Contoh: Juara 1" required>
+                    <input type="text" name="juara" class="form-control"
+                           value="{{ old('juara') }}"
+                           placeholder="Contoh: Juara 1"
+                           required>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label class="form-label">File Sertifikat</label>
                     <input type="file" name="file_sertifikat" class="form-control">
-                    <small class="text-muted">Format: PDF, JPG, JPEG, PNG. Maksimal 2 MB.</small>
+                    <small class="text-muted">
+                        Format: PDF, JPG, JPEG, PNG. Maksimal 2 MB.
+                    </small>
                 </div>
+            </div>
+
+            <div class="alert alert-info mt-3">
+                Setelah prestasi diajukan, status awal akan menjadi
+                <strong>Menunggu Verifikasi</strong> sampai admin memproses data.
             </div>
 
             <div class="d-flex gap-2 mt-3">
@@ -94,7 +109,7 @@
                     Ajukan Prestasi
                 </button>
 
-                <a href="{{ route('mahasiswa.dashboard') }}" class="btn btn-secondary rounded-pill px-4">
+                <a href="{{ route('mahasiswa.prestasi.index') }}" class="btn btn-secondary rounded-pill px-4">
                     Kembali
                 </a>
             </div>

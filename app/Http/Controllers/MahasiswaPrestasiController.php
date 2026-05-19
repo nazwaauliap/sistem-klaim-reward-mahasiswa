@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Mahasiswa;
 use App\Models\KategoriPrestasi;
 use App\Models\TingkatPrestasi;
 use App\Models\PrestasiMahasiswa;
@@ -12,11 +11,14 @@ class MahasiswaPrestasiController extends Controller
 {
     public function index()
     {
+        $idMhs = auth()->user()->id_mhs;
+
         $prestasiMahasiswas = PrestasiMahasiswa::with([
             'mahasiswa',
             'kategoriPrestasi',
             'tingkatPrestasi'
         ])
+            ->where('id_mhs', $idMhs)
             ->orderBy('id_prestasi', 'desc')
             ->get();
 
@@ -25,12 +27,12 @@ class MahasiswaPrestasiController extends Controller
 
     public function create()
     {
-        $mahasiswas = Mahasiswa::orderBy('nama', 'asc')->get();
+        $mahasiswa = auth()->user()->mahasiswa;
         $kategoriPrestasis = KategoriPrestasi::orderBy('nama_kategori', 'asc')->get();
         $tingkatPrestasis = TingkatPrestasi::orderBy('nama_tingkat', 'asc')->get();
 
         return view('mahasiswa-panel.prestasi.create', compact(
-            'mahasiswas',
+            'mahasiswa',
             'kategoriPrestasis',
             'tingkatPrestasis'
         ));
@@ -39,7 +41,6 @@ class MahasiswaPrestasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_mhs' => 'required',
             'id_kategori' => 'required',
             'id_tingkat' => 'required',
             'nama_kegiatan' => 'required',
@@ -56,7 +57,7 @@ class MahasiswaPrestasiController extends Controller
         }
 
         PrestasiMahasiswa::create([
-            'id_mhs' => $request->id_mhs,
+            'id_mhs' => auth()->user()->id_mhs,
             'id_kategori' => $request->id_kategori,
             'id_tingkat' => $request->id_tingkat,
             'nama_kegiatan' => $request->nama_kegiatan,
