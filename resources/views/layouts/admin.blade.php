@@ -342,9 +342,9 @@
             </li>
 
             <li>
-                <a href="#">
-                    <span class="menu-icon">📊</span>
-                    <span class="menu-text">Tingkat Prestasi</span>
+                <a href="{{ route('admin.tingkat-prestasi.index') }}" class="{{ request()->routeIs('admin.tingkat-prestasi.*') ? 'active' : '' }}">
+                <span class="menu-icon">📊</span>
+                <span class="menu-text">Tingkat Prestasi</span>
                 </a>
             </li>
 

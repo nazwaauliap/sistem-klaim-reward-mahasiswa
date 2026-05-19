@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\HakAksesController;
 use App\Http\Controllers\KategoriPrestasiController;
+use App\Http\Controllers\TingkatPrestasiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,4 +18,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('mahasiswa', MahasiswaController::class);
     Route::resource('hak-akses', HakAksesController::class)->only(['index']);
     Route::resource('kategori-prestasi', KategoriPrestasiController::class);
+    Route::resource('tingkat-prestasi', TingkatPrestasiController::class);
 });
