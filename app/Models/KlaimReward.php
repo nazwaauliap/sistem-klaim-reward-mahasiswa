@@ -31,4 +31,9 @@ class KlaimReward extends Model
     {
         return $this->belongsTo(JenisReward::class, 'id_reward', 'id_reward');
     }
+
+    public function pencairanReward()
+    {
+        return $this->hasOne(PencairanReward::class, 'id_klaim', 'id_klaim');
+    }
 }

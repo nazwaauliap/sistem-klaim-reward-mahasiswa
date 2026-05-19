@@ -12,6 +12,7 @@ use App\Http\Controllers\MahasiswaDashboardController;
 use App\Http\Controllers\MahasiswaPrestasiController;
 use App\Http\Controllers\MahasiswaKlaimRewardController;
 use App\Http\Controllers\AdminKlaimRewardController;
+use App\Http\Controllers\PencairanRewardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,6 +31,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('jenis-reward', JenisRewardController::class);
     Route::resource('prestasi-mahasiswa', PrestasiMahasiswaController::class);
     Route::resource('klaim-reward', AdminKlaimRewardController::class)->only(['index', 'edit', 'update']);
+    Route::resource('pencairan-reward', PencairanRewardController::class);
 });
 
 Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {

@@ -395,6 +395,13 @@
             </li>
 
             <li>
+                <a href="{{ route('admin.pencairan-reward.index') }}" class="{{ request()->routeIs('admin.pencairan-reward.*') ? 'active' : '' }}">
+                    <span class="menu-icon">💳</span>
+                    <span class="menu-text">Pencairan Reward</span>
+                </a>
+            </li>
+
+            <li>
                 <a href="#">
                     <span class="menu-icon">📄</span>
                     <span class="menu-text">Laporan</span>
