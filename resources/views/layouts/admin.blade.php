@@ -381,14 +381,14 @@
             </li>
 
             <li>
-                <a href="#">
+                <a href="{{ route('admin.prestasi-mahasiswa.index') }}" class="{{ request()->routeIs('admin.prestasi-mahasiswa.*') ? 'active' : '' }}">
                     <span class="menu-icon">✅</span>
                     <span class="menu-text">Verifikasi Prestasi</span>
                 </a>
             </li>
 
             <li>
-                <a href="#">
+                <a href="{{ route('admin.klaim-reward.index') }}" class="{{ request()->routeIs('admin.klaim-reward.*') ? 'active' : '' }}">
                     <span class="menu-icon">💰</span>
                     <span class="menu-text">Klaim Reward</span>
                 </a>

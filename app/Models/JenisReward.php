@@ -19,4 +19,9 @@ class JenisReward extends Model
     {
         return $this->belongsTo(TingkatPrestasi::class, 'id_tingkat', 'id_tingkat');
     }
+
+    public function klaimRewards()
+    {
+        return $this->hasMany(KlaimReward::class, 'id_reward', 'id_reward');
+    }
 }

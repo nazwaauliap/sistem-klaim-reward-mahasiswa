@@ -17,4 +17,9 @@ class PeriodeKlaim extends Model
         'tanggal_selesai',
         'status',
     ];
+
+    public function klaimRewards()
+    {
+        return $this->hasMany(KlaimReward::class, 'id_periode', 'id_periode');
+    }
 }
