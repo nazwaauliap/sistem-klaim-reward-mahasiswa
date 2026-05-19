@@ -26,9 +26,11 @@
             </div>
         </div>
 
-        <div class="col-md-4 text-md-end mt-4 mt-md-0">
-            <h1 class="fw-bold text-primary mb-0">SIKAREMA</h1>
-            <p class="text-muted mb-0">Prestasi & Reward Mahasiswa</p>
+        <div class="col-md-4">
+            <div class="hero-brand-simple">
+                <h1>SIKAREMA</h1>
+                <p>Prestasi & Reward Mahasiswa</p>
+            </div>
         </div>
     </div>
 </div>

@@ -145,11 +145,53 @@
             padding-top: 14px;
         }
 
+        .sidebar-user-box {
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 16px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .sidebar-user-box small {
+            display: block;
+            font-size: 11px;
+            opacity: 0.8;
+            margin-bottom: 2px;
+        }
+
+        .sidebar-user-box strong {
+            font-size: 13px;
+            font-weight: 700;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         .sidebar-footer .btn {
             font-size: 13px;
             font-weight: 700;
             border-radius: 999px;
             padding: 9px 12px;
+        }
+
+        .btn-logout {
+            background: rgba(239, 68, 68, 0.95);
+            color: white;
+            border: none;
+            border-radius: 999px;
+            padding: 9px 12px;
+            font-weight: 700;
+            font-size: 13px;
+            transition: 0.25s ease;
+        }
+
+        .btn-logout:hover {
+            background: #dc2626;
+            color: white;
+            transform: translateY(-2px);
         }
 
         .content {
@@ -374,7 +416,7 @@
             </li>
 
             <li>
-                <a href="{{ Route::has('admin.jenis-reward.index') ? route('admin.jenis-reward.index') : '#' }}" class="{{ request()->routeIs('admin.jenis-reward.*') ? 'active' : '' }}">
+                <a href="{{ route('admin.jenis-reward.index') }}" class="{{ request()->routeIs('admin.jenis-reward.*') ? 'active' : '' }}">
                     <span class="menu-icon">🎁</span>
                     <span class="menu-text">Jenis Reward</span>
                 </a>
@@ -410,10 +452,18 @@
         </ul>
 
         <div class="sidebar-footer">
-            <a href="{{ url('/') }}" class="btn btn-light w-100">
+            <a href="{{ url('/') }}" class="btn btn-light w-100 mb-2">
                 Kembali ke Beranda
             </a>
+
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-logout w-100">
+                    Logout
+                </button>
+            </form>
         </div>
+
     </aside>
 
     <main class="content">
@@ -426,7 +476,7 @@
             </div>
 
             <div class="text-end d-none d-md-block">
-                <strong>Admin</strong><br>
+                <strong>{{ auth()->user()->name ?? 'Admin' }}</strong><br>
                 <small class="text-muted">SIKAREMA</small>
             </div>
         </div>

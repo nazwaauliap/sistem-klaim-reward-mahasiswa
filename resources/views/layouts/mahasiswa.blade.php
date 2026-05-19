@@ -15,6 +15,7 @@
             --green: #12b886;
             --soft-bg: #f3f9fb;
             --text-muted: #64748b;
+            --danger: #ef4444;
         }
 
         * {
@@ -62,6 +63,23 @@
             width: 100%;
         }
 
+        .btn-logout-mahasiswa {
+            background: var(--danger);
+            color: white !important;
+            border: none;
+            border-radius: 999px;
+            padding: 8px 20px;
+            font-weight: 700;
+            margin-left: 16px;
+            transition: 0.25s ease;
+        }
+
+        .btn-logout-mahasiswa:hover {
+            background: #dc2626;
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
         .main-content {
             padding: 34px 0 50px;
         }
@@ -69,7 +87,7 @@
         .hero-mahasiswa {
             background: white;
             border-radius: 28px;
-            padding: 34px;
+            padding: 34px 42px;
             box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
             margin-bottom: 26px;
             position: relative;
@@ -112,6 +130,34 @@
             z-index: 1;
         }
 
+        .hero-brand-simple {
+            position: relative;
+            z-index: 1;
+            height: 100%;
+            min-height: 210px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transform: translateY(-25px);
+        }
+
+        .hero-brand-simple h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--dark-blue);
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .hero-brand-simple p {
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 0;
+            font-size: 16px;
+        }
+
         .period-banner {
             background: linear-gradient(90deg, var(--dark-blue), var(--primary-blue), var(--green));
             border-radius: 20px;
@@ -120,19 +166,6 @@
             box-shadow: 0 10px 24px rgba(11, 94, 215, 0.18);
             margin-bottom: 28px;
             position: relative;
-        }
-
-        .period-banner::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                90deg,
-                rgba(255,255,255,0.06),
-                rgba(255,255,255,0.02),
-                rgba(255,255,255,0.06)
-            );
-            pointer-events: none;
         }
 
         .period-track {
@@ -277,8 +310,25 @@
                 margin-top: 8px;
             }
 
+            .btn-logout-mahasiswa {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%;
+            }
+
             .hero-mahasiswa {
                 padding: 26px;
+            }
+
+            .hero-brand-simple {
+                align-items: flex-start;
+                text-align: left;
+                min-height: auto;
+                margin-top: 20px;
+            }
+
+            .hero-brand-simple h1 {
+                font-size: 34px;
             }
 
             .period-track {
@@ -305,7 +355,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarMahasiswa">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('mahasiswa.dashboard') }}">Dashboard</a>
                 </li>
@@ -319,11 +369,20 @@
                 </li>
 
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('mahasiswa.klaim-reward.index') }}">Klaim Reward</a>
+                    <a class="nav-link" href="{{ route('mahasiswa.klaim-reward.index') }}">Klaim Reward</a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/') }}">Beranda</a>
+                </li>
+
+                <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-logout-mahasiswa">
+                            Logout
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>

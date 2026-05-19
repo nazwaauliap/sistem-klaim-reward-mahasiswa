@@ -14,6 +14,7 @@ use App\Http\Controllers\MahasiswaKlaimRewardController;
 use App\Http\Controllers\AdminKlaimRewardController;
 use App\Http\Controllers\PencairanRewardController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,4 +47,8 @@ Route::prefix('mahasiswa')->name('mahasiswa.')->group(function () {
     
     Route::post('/klaim-reward', [MahasiswaKlaimRewardController::class, 'store'])->name('klaim-reward.store');
     Route::post('/prestasi', [MahasiswaPrestasiController::class, 'store'])->name('prestasi.store');
-    });
+});
+
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
