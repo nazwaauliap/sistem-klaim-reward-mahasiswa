@@ -6,6 +6,7 @@ use App\Http\Controllers\HakAksesController;
 use App\Http\Controllers\KategoriPrestasiController;
 use App\Http\Controllers\TingkatPrestasiController;
 use App\Http\Controllers\PeriodeKlaimController;
+use App\Http\Controllers\JenisRewardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,4 +22,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('kategori-prestasi', KategoriPrestasiController::class);
     Route::resource('tingkat-prestasi', TingkatPrestasiController::class);
     Route::resource('periode-klaim', PeriodeKlaimController::class);
+    Route::resource('jenis-reward', JenisRewardController::class);
 });

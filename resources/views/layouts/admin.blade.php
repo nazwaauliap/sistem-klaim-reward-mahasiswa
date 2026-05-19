@@ -30,16 +30,18 @@
         }
 
         .sidebar {
-            width: 270px;
-            background: linear-gradient(180deg, var(--dark-blue), var(--primary-blue), var(--green));
-            color: white;
+            width: 250px;
+            height: 100vh;
             position: fixed;
             top: 0;
-            bottom: 0;
             left: 0;
-            padding: 24px 18px;
-            transition: all 0.3s ease;
-            overflow-x: hidden;
+            background: linear-gradient(180deg, var(--dark-blue), var(--primary-blue), var(--green));
+            color: white;
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: width 0.3s ease;
             z-index: 1000;
         }
 
@@ -47,11 +49,12 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 28px;
+            flex-shrink: 0;
+            margin-bottom: 6px;
         }
 
         .sidebar-brand {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 800;
             letter-spacing: 1px;
             white-space: nowrap;
@@ -64,43 +67,58 @@
             border: none;
             background: rgba(255, 255, 255, 0.18);
             color: white;
-            font-size: 20px;
+            font-size: 19px;
             font-weight: 700;
             transition: 0.25s ease;
         }
 
         .sidebar-toggle:hover {
             background: rgba(255, 255, 255, 0.30);
-            transform: scale(1.05);
         }
 
         .sidebar-subtitle {
-            font-size: 13px;
+            font-size: 12px;
             opacity: 0.85;
-            margin-top: -18px;
-            margin-bottom: 26px;
-            white-space: nowrap;
+            margin-bottom: 14px;
+            flex-shrink: 0;
         }
 
         .sidebar-menu {
             list-style: none;
-            padding: 0;
+            padding: 0 4px 0 0;
             margin: 0;
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .sidebar-menu::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar-menu::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.35);
+            border-radius: 999px;
+        }
+
+        .sidebar-menu::-webkit-scrollbar-track {
+            background: transparent;
         }
 
         .sidebar-menu li {
-            margin-bottom: 10px;
+            margin-bottom: 7px;
         }
 
         .sidebar-menu a {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 13px 16px;
-            border-radius: 14px;
+            gap: 11px;
+            padding: 10px 13px;
+            border-radius: 13px;
             color: white;
             text-decoration: none;
             font-weight: 600;
+            font-size: 13.5px;
             transition: 0.25s ease;
             white-space: nowrap;
         }
@@ -108,14 +126,14 @@
         .sidebar-menu a:hover,
         .sidebar-menu a.active {
             background: rgba(255, 255, 255, 0.20);
-            transform: translateX(4px);
+            transform: translateX(3px);
         }
 
         .menu-icon {
-            width: 24px;
-            min-width: 24px;
+            width: 22px;
+            min-width: 22px;
             text-align: center;
-            font-size: 18px;
+            font-size: 17px;
         }
 
         .menu-text {
@@ -123,17 +141,22 @@
         }
 
         .sidebar-footer {
-            position: absolute;
-            bottom: 22px;
-            left: 18px;
-            right: 18px;
+            flex-shrink: 0;
+            padding-top: 14px;
+        }
+
+        .sidebar-footer .btn {
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 999px;
+            padding: 9px 12px;
         }
 
         .content {
-            margin-left: 270px;
-            width: calc(100% - 270px);
-            padding: 28px;
-            transition: all 0.3s ease;
+            margin-left: 250px;
+            width: calc(100% - 250px);
+            padding: 26px;
+            transition: margin-left 0.3s ease, width 0.3s ease;
         }
 
         .topbar {
@@ -207,15 +230,14 @@
             color: var(--dark-blue);
         }
 
-        /* Saat sidebar ditutup */
         .admin-wrapper.sidebar-collapsed .sidebar {
-            width: 92px;
-            padding: 24px 14px;
+            width: 78px;
+            padding: 18px 10px;
         }
 
         .admin-wrapper.sidebar-collapsed .content {
-            margin-left: 92px;
-            width: calc(100% - 92px);
+            margin-left: 78px;
+            width: calc(100% - 78px);
         }
 
         .admin-wrapper.sidebar-collapsed .sidebar-brand,
@@ -225,24 +247,23 @@
             display: none;
         }
 
-        .admin-wrapper.sidebar-collapsed .sidebar-brand-short {
-            display: block;
-        }
-
         .admin-wrapper.sidebar-collapsed .sidebar-header {
             justify-content: center;
-            flex-direction: column;
-            gap: 14px;
         }
 
         .admin-wrapper.sidebar-collapsed .sidebar-toggle {
-            width: 46px;
-            height: 46px;
+            width: 44px;
+            height: 44px;
+        }
+
+        .admin-wrapper.sidebar-collapsed .sidebar-menu {
+            padding-right: 0;
+            margin-top: 18px;
         }
 
         .admin-wrapper.sidebar-collapsed .sidebar-menu a {
             justify-content: center;
-            padding: 14px 0;
+            padding: 11px 0;
             gap: 0;
         }
 
@@ -252,18 +273,18 @@
         }
 
         .admin-wrapper.sidebar-collapsed .menu-icon {
-            font-size: 20px;
+            font-size: 18px;
         }
 
         @media (max-width: 768px) {
             .sidebar {
-                width: 92px;
-                padding: 24px 14px;
+                width: 78px;
+                padding: 18px 10px;
             }
 
             .content {
-                margin-left: 92px;
-                width: calc(100% - 92px);
+                margin-left: 78px;
+                width: calc(100% - 78px);
                 padding: 18px;
             }
 
@@ -276,24 +297,21 @@
 
             .sidebar-header {
                 justify-content: center;
-                flex-direction: column;
-                gap: 14px;
+            }
+
+            .sidebar-menu {
+                padding-right: 0;
+                margin-top: 18px;
             }
 
             .sidebar-menu a {
                 justify-content: center;
-                padding: 14px 0;
+                padding: 11px 0;
                 gap: 0;
             }
 
             .topbar {
                 padding: 18px;
-            }
-
-            .admin-wrapper.sidebar-collapsed .sidebar-header {
-                justify-content: center;
-                flex-direction: row;
-                gap: 0;
             }
         }
     </style>
@@ -336,22 +354,29 @@
 
             <li>
                 <a href="{{ route('admin.kategori-prestasi.index') }}" class="{{ request()->routeIs('admin.kategori-prestasi.*') ? 'active' : '' }}">
-                <span class="menu-icon">🏆</span>
-                <span class="menu-text">Kategori Prestasi</span>
+                    <span class="menu-icon">🏆</span>
+                    <span class="menu-text">Kategori Prestasi</span>
                 </a>
             </li>
 
             <li>
                 <a href="{{ route('admin.tingkat-prestasi.index') }}" class="{{ request()->routeIs('admin.tingkat-prestasi.*') ? 'active' : '' }}">
-                <span class="menu-icon">📊</span>
-                <span class="menu-text">Tingkat Prestasi</span>
+                    <span class="menu-icon">📊</span>
+                    <span class="menu-text">Tingkat Prestasi</span>
                 </a>
             </li>
 
             <li>
                 <a href="{{ route('admin.periode-klaim.index') }}" class="{{ request()->routeIs('admin.periode-klaim.*') ? 'active' : '' }}">
-                <span class="menu-icon">📅</span>
-                <span class="menu-text">Periode Klaim</span>
+                    <span class="menu-icon">📅</span>
+                    <span class="menu-text">Periode Klaim</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ Route::has('admin.jenis-reward.index') ? route('admin.jenis-reward.index') : '#' }}" class="{{ request()->routeIs('admin.jenis-reward.*') ? 'active' : '' }}">
+                    <span class="menu-icon">🎁</span>
+                    <span class="menu-text">Jenis Reward</span>
                 </a>
             </li>
 
@@ -378,7 +403,7 @@
         </ul>
 
         <div class="sidebar-footer">
-            <a href="{{ url('/') }}" class="btn btn-light w-100 rounded-pill fw-semibold">
+            <a href="{{ url('/') }}" class="btn btn-light w-100">
                 Kembali ke Beranda
             </a>
         </div>

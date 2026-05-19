@@ -12,4 +12,9 @@ class TingkatPrestasi extends Model
         'nama_tingkat',
         'deskripsi',
     ];
+
+    public function jenisRewards()
+    {
+        return $this->hasMany(JenisReward::class, 'id_tingkat', 'id_tingkat');
+    }
 }
