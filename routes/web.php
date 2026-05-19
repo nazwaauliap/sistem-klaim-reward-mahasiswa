@@ -5,6 +5,7 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\HakAksesController;
 use App\Http\Controllers\KategoriPrestasiController;
 use App\Http\Controllers\TingkatPrestasiController;
+use App\Http\Controllers\PeriodeKlaimController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,4 +20,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('hak-akses', HakAksesController::class)->only(['index']);
     Route::resource('kategori-prestasi', KategoriPrestasiController::class);
     Route::resource('tingkat-prestasi', TingkatPrestasiController::class);
+    Route::resource('periode-klaim', PeriodeKlaimController::class);
 });

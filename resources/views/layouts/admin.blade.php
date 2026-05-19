@@ -349,9 +349,9 @@
             </li>
 
             <li>
-                <a href="#">
-                    <span class="menu-icon">📅</span>
-                    <span class="menu-text">Periode Klaim</span>
+                <a href="{{ route('admin.periode-klaim.index') }}" class="{{ request()->routeIs('admin.periode-klaim.*') ? 'active' : '' }}">
+                <span class="menu-icon">📅</span>
+                <span class="menu-text">Periode Klaim</span>
                 </a>
             </li>
 
