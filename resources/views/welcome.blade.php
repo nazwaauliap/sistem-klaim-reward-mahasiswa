@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="hero-section">
+<section id="beranda" class="hero-section">
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-7">

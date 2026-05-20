@@ -346,7 +346,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-mahasiswa shadow-sm sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="{{ route('mahasiswa.dashboard') }}">
+        <a class="navbar-brand" href="{{ url('/') }}">
             SIKAREMA Mahasiswa
         </a>
 
@@ -357,10 +357,6 @@
         <div class="collapse navbar-collapse" id="navbarMahasiswa">
             <ul class="navbar-nav ms-auto align-items-lg-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('mahasiswa.dashboard') }}">Dashboard</a>
-                </li>
-
-                <li class="nav-item">
                     <a class="nav-link" href="{{ route('mahasiswa.prestasi.create') }}">Ajukan Prestasi</a>
                 </li>
 
@@ -370,10 +366,6 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('mahasiswa.klaim-reward.index') }}">Klaim Reward</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">Beranda</a>
                 </li>
 
                 <li class="nav-item">

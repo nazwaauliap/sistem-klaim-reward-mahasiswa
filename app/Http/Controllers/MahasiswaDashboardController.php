@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\PrestasiMahasiswa;
+use Illuminate\Support\Facades\Auth;
 
 class MahasiswaDashboardController extends Controller
 {
     public function index()
     {
-        $idMhs = auth()->user()->id_mhs;
+        $user = Auth::user();
+        $idMhs = $user->id_mhs;
 
         $totalPrestasi = PrestasiMahasiswa::where('id_mhs', $idMhs)->count();
 

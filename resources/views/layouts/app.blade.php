@@ -233,6 +233,11 @@
             background: var(--dark-blue);
             color: white;
         }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        
     </style>
 </head>
 <body>
@@ -247,7 +252,7 @@
 
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Beranda</a></li>
+                <li class="nav-item"><a class="nav-link"href="#beranda">Beranda</a></li>
                 <li class="nav-item"><a class="nav-link" href="#alur">Alur</a></li>
                 <li class="nav-item"><a class="nav-link" href="#fitur">Fitur</a></li>
                 <a class="nav-link" href="{{ route('login') }}">Login Admin</a>
