@@ -431,10 +431,3 @@ Untuk demo online, deploy ke hosting yang mendukung **PHP** dan **MySQL**.
 | Laporan per periode | ✅ Selesai |
 | Data dummy (seeder) | ✅ Selesai |
 
----
-
-<div align="center">
-
-Made with ❤️ using <img src="https://img.shields.io/badge/Laravel-FF2D20?logo=laravel&logoColor=white" alt="Laravel" style="vertical-align:middle">
-
-</div>
