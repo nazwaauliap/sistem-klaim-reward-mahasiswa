@@ -129,6 +129,24 @@
             transform: translateX(3px);
         }
 
+        .sidebar-section-title {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.68);
+            padding: 14px 13px 4px;
+            margin-top: 4px;
+            margin-bottom: 0 !important;
+            white-space: nowrap;
+        }
+
+        .sidebar-section-line {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.16);
+            margin: 4px 13px 9px;
+        }
+
         .menu-icon {
             width: 22px;
             min-width: 22px;
@@ -143,31 +161,6 @@
         .sidebar-footer {
             flex-shrink: 0;
             padding-top: 14px;
-        }
-
-        .sidebar-user-box {
-            background: rgba(255, 255, 255, 0.14);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            border-radius: 16px;
-            padding: 12px 14px;
-            margin-bottom: 12px;
-            color: white;
-        }
-
-        .sidebar-user-box small {
-            display: block;
-            font-size: 11px;
-            opacity: 0.8;
-            margin-bottom: 2px;
-        }
-
-        .sidebar-user-box strong {
-            font-size: 13px;
-            font-weight: 700;
-            display: block;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .sidebar-footer .btn {
@@ -285,7 +278,9 @@
         .admin-wrapper.sidebar-collapsed .sidebar-brand,
         .admin-wrapper.sidebar-collapsed .sidebar-subtitle,
         .admin-wrapper.sidebar-collapsed .menu-text,
-        .admin-wrapper.sidebar-collapsed .sidebar-footer {
+        .admin-wrapper.sidebar-collapsed .sidebar-footer,
+        .admin-wrapper.sidebar-collapsed .sidebar-section-title,
+        .admin-wrapper.sidebar-collapsed .sidebar-section-line {
             display: none;
         }
 
@@ -333,7 +328,9 @@
             .sidebar-brand,
             .sidebar-subtitle,
             .menu-text,
-            .sidebar-footer {
+            .sidebar-footer,
+            .sidebar-section-title,
+            .sidebar-section-line {
                 display: none;
             }
 
@@ -380,6 +377,9 @@
                 </a>
             </li>
 
+            <li class="sidebar-section-title">Master Data</li>
+            <div class="sidebar-section-line"></div>
+
             <li>
                 <a href="{{ route('admin.mahasiswa.index') }}" class="{{ request()->routeIs('admin.mahasiswa.*') ? 'active' : '' }}">
                     <span class="menu-icon">🎓</span>
@@ -422,6 +422,9 @@
                 </a>
             </li>
 
+            <li class="sidebar-section-title">Transaksi</li>
+            <div class="sidebar-section-line"></div>
+
             <li>
                 <a href="{{ route('admin.prestasi-mahasiswa.index') }}" class="{{ request()->routeIs('admin.prestasi-mahasiswa.*') ? 'active' : '' }}">
                     <span class="menu-icon">✅</span>
@@ -463,7 +466,6 @@
                 </button>
             </form>
         </div>
-
     </aside>
 
     <main class="content">
