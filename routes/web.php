@@ -3,6 +3,8 @@
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\MahasiswaController;
+    use App\Http\Controllers\DosenDashboardController;
+    use App\Http\Controllers\DosenPrestasiController;
     use App\Http\Controllers\HakAksesController;
     use App\Http\Controllers\KategoriPrestasiController;
     use App\Http\Controllers\TingkatPrestasiController;
@@ -82,3 +84,21 @@
     Route::post('/login', [AuthController::class, 'login'])->name('login.process');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/logout-home', [AuthController::class, 'logoutHome'])->name('logout.home');
+
+    Route::prefix('dosen')
+    ->name('dosen.')
+    ->middleware(['auth', 'role:Dosen'])
+    ->group(function () {
+
+        Route::get('/dashboard', [DosenDashboardController::class, 'index'])
+            ->name('dashboard');
+
+        Route::get('/prestasi-mahasiswa', [DosenPrestasiController::class, 'index'])
+            ->name('prestasi-mahasiswa.index');
+
+        Route::get('/prestasi-mahasiswa/{prestasiMahasiswa}', [DosenPrestasiController::class, 'show'])
+            ->name('prestasi-mahasiswa.show');
+
+        Route::put('/prestasi-mahasiswa/{prestasiMahasiswa}', [DosenPrestasiController::class, 'update'])
+            ->name('prestasi-mahasiswa.update');
+    });

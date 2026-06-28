@@ -39,4 +39,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Mahasiswa::class, 'id_mhs', 'id_mhs');
     }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'id_dosen', 'id_dosen');
+    }
 }

@@ -1,6 +1,33 @@
 @extends('layouts.admin')
 
 @section('content')
+<style>
+    .page-card {
+        border-radius: 20px;
+        box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+    }
+    .page-card .card-body {
+        padding: 1.35rem 1.4rem;
+    }
+    .feature-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
+        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
+    .btn-main {
+        padding: 0.85rem 1.35rem;
+    }
+    h4 {
+        font-size: 1.1rem;
+    }
+    .fw-bold + .text-muted {
+        margin-top: 0.2rem;
+    }
+    .row.g-4 {
+        gap: 1.5rem;
+    }
+</style>
 <div class="mb-4">
     <h2 class="fw-bold">Dashboard Admin</h2>
     <p class="text-muted">

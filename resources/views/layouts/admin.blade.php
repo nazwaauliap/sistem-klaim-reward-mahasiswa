@@ -369,13 +369,30 @@
                 </button>
             </div>
 
-            <div class="sidebar-subtitle">Admin Panel</div>
-
             @php
             $role = auth()->user()->hakAkses->nama_akses ?? '';
             @endphp
 
+            <div class="sidebar-subtitle">{{ auth()->user()?->hakAkses?->nama_akses === 'Dosen'
+    ? 'Dosen Panel'
+    : 'Admin Panel' }}</div>
+
             <ul class="sidebar-menu">
+                @if($role === 'Dosen')
+                <li>
+                    <a href="{{ route('dosen.dashboard') }}" class="{{ request()->routeIs('dosen.dashboard') ? 'active' : '' }}">
+                        <span class="menu-icon">🏠</span>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('dosen.prestasi-mahasiswa.index') }}" class="{{ request()->routeIs('dosen.prestasi-mahasiswa.*') ? 'active' : '' }}">
+                        <span class="menu-icon">📋</span>
+                        <span class="menu-text">Data Prestasi Mahasiswa</span>
+                    </a>
+                </li>
+                @elseif($role === 'Super Admin')
                 <li>
                     <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                         <span class="menu-icon">🏠</span>
@@ -383,7 +400,6 @@
                     </a>
                 </li>
 
-                @if($role === 'Super Admin')
                 <li class="sidebar-section-title">Manajemen Sistem</li>
                 <div class="sidebar-section-line"></div>
 
@@ -404,6 +420,13 @@
                     </a>
                 </li>
                 @else
+                <li>
+                    <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                        <span class="menu-icon">🏠</span>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
+                </li>
+
                 <li class="sidebar-section-title">Master Data</li>
                 <div class="sidebar-section-line"></div>
 

@@ -36,10 +36,7 @@ public function login(Request $request)
         }
 
         if ($role === 'Dosen') {
-            Auth::logout();
-
-            return redirect()->route('login')
-                ->with('error', 'Halaman dosen belum dibuat.');
+            return redirect()->route('dosen.dashboard');
         }
 
         Auth::logout();
