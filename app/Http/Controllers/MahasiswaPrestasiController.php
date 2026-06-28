@@ -3,20 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\KategoriPrestasi;
-use App\Models\TingkatPrestasi;
 use App\Models\PrestasiMahasiswa;
+use App\Models\TingkatPrestasi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class MahasiswaPrestasiController extends Controller
 {
     public function index()
     {
-        $idMhs = auth()->user()->id_mhs;
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $idMhs = $user->id_mhs;
 
         $prestasiMahasiswas = PrestasiMahasiswa::with([
             'mahasiswa',
             'kategoriPrestasi',
-            'tingkatPrestasi'
+            'tingkatPrestasi',
         ])
             ->where('id_mhs', $idMhs)
             ->orderBy('id_prestasi', 'desc')
@@ -27,8 +32,18 @@ class MahasiswaPrestasiController extends Controller
 
     public function create()
     {
-        $mahasiswa = auth()->user()->mahasiswa;
-        $kategoriPrestasis = KategoriPrestasi::orderBy('nama_kategori', 'asc')->get();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $mahasiswa = $user->mahasiswa;
+
+        $kategoriPrestasis = KategoriPrestasi::whereIn('nama_kategori', [
+            'Akademik',
+            'Non-Akademik',
+        ])
+            ->orderBy('nama_kategori', 'asc')
+            ->get();
+
         $tingkatPrestasis = TingkatPrestasi::orderBy('nama_tingkat', 'asc')->get();
 
         return view('mahasiswa-panel.prestasi.create', compact(
@@ -40,13 +55,24 @@ class MahasiswaPrestasiController extends Controller
 
     public function store(Request $request)
     {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
         $request->validate([
-            'id_kategori' => 'required',
-            'id_tingkat' => 'required',
-            'nama_kegiatan' => 'required',
-            'penyelenggara' => 'required',
+            'id_kategori' => [
+                'required',
+                Rule::exists('kategori_prestasis', 'id_kategori')->where(function ($query) {
+                    return $query->whereIn('nama_kategori', [
+                        'Akademik',
+                        'Non-Akademik',
+                    ]);
+                }),
+            ],
+            'id_tingkat' => 'required|exists:tingkat_prestasis,id_tingkat',
+            'nama_kegiatan' => 'required|string|max:255',
+            'penyelenggara' => 'required|string|max:255',
             'tanggal_kegiatan' => 'required|date',
-            'juara' => 'required',
+            'juara' => 'required|string|max:100',
             'file_sertifikat' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
@@ -57,7 +83,7 @@ class MahasiswaPrestasiController extends Controller
         }
 
         PrestasiMahasiswa::create([
-            'id_mhs' => auth()->user()->id_mhs,
+            'id_mhs' => $user->id_mhs,
             'id_kategori' => $request->id_kategori,
             'id_tingkat' => $request->id_tingkat,
             'nama_kegiatan' => $request->nama_kegiatan,
@@ -68,7 +94,8 @@ class MahasiswaPrestasiController extends Controller
             'status_verifikasi' => 'Menunggu',
         ]);
 
-        return redirect()->route('mahasiswa.prestasi.index')
+        return redirect()
+            ->route('mahasiswa.prestasi.index')
             ->with('success', 'Prestasi berhasil diajukan dan menunggu verifikasi admin.');
     }
 }

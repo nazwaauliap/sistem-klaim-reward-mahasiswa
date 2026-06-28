@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
-    public function index()
-    {
-        $mahasiswas = Mahasiswa::orderBy('id_mhs', 'desc')->get();
 
-        return view('mahasiswa.index', compact('mahasiswas'));
-    }
+public function index()
+{
+    $mahasiswas = Mahasiswa::orderBy('nim', 'asc')->get();
+
+    return view('mahasiswa.index', compact('mahasiswas'));
+}
 
     public function create()
     {

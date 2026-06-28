@@ -12,39 +12,46 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-        $credentials = $request->only('email', 'password');
+    $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
 
-            $user = Auth::user();
-            $role = $user->hakAkses->nama_akses ?? null;
+        $user = Auth::user();
+        $role = $user->hakAkses->nama_akses ?? null;
 
-            if ($role === 'Admin') {
-                return redirect()->route('admin.dashboard');
-            }
+        if ($role === 'Mahasiswa') {
+            return redirect()->route('mahasiswa.dashboard');
+        }
 
-            if ($role === 'Mahasiswa') {
-                return redirect()->route('mahasiswa.dashboard');
-            }
+        if (in_array($role, ['Admin', 'Super Admin'])) {
+            return redirect()->route('admin.dashboard');
+        }
 
+        if ($role === 'Dosen') {
             Auth::logout();
 
             return redirect()->route('login')
-                ->with('error', 'Role pengguna tidak dikenali.');
+                ->with('error', 'Halaman dosen belum dibuat.');
         }
 
-        return back()
-            ->withInput()
-            ->with('error', 'Email atau password salah.');
+        Auth::logout();
+
+        return redirect()->route('login')
+            ->with('error', 'Role pengguna tidak dikenali.');
     }
+
+    return back()
+        ->withInput()
+        ->with('error', 'Email atau password salah.');
+}
 
     public function logout(Request $request)
     {

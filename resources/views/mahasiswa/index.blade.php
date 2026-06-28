@@ -37,7 +37,6 @@
 
 <div class="mb-4">
     <h2 class="fw-bold">Data Mahasiswa</h2>
-    <p class="text-muted">Kelola data mahasiswa sesuai dengan 15 kolom pada Tugas 1.</p>
 </div>
 
 @if(session('success'))
