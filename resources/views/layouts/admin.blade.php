@@ -8,16 +8,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="{{ asset('css/sikarema.css') }}" rel="stylesheet">
 
     <style>
-        :root {
-            --primary-blue: #0b5ed7;
-            --dark-blue: #0b315f;
-            --green: #12b886;
-            --soft-bg: #f3f9fb;
-            --text-muted: #64748b;
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--soft-bg);
@@ -201,69 +194,6 @@
             padding: 20px 26px;
             box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
             margin-bottom: 28px;
-        }
-
-        .page-card,
-        .feature-card {
-            border: none;
-            border-radius: 22px;
-            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
-        }
-
-        .feature-icon {
-            width: 54px;
-            height: 54px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--green));
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 20px;
-            margin-bottom: 16px;
-        }
-
-        .btn-main,
-        .btn-mahasiswa {
-            background: linear-gradient(90deg, var(--primary-blue), var(--green));
-            color: white;
-            border: none;
-            border-radius: 999px;
-            padding: 10px 22px;
-            font-weight: 700;
-            transition: 0.25s ease;
-        }
-
-        .btn-main:hover,
-        .btn-mahasiswa:hover {
-            color: white;
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .btn-role {
-            border-radius: 999px;
-            padding: 10px 22px;
-            font-weight: 700;
-        }
-
-        .section-padding {
-            padding: 0;
-        }
-
-        .section-title {
-            font-weight: 800;
-            color: var(--dark-blue);
-        }
-
-        .section-subtitle {
-            color: var(--text-muted);
-        }
-
-        .table-primary th {
-            background: #dbeafe !important;
-            color: var(--dark-blue);
         }
 
         .admin-wrapper.sidebar-collapsed .sidebar {
