@@ -166,6 +166,8 @@
     <p class="dashboard-lead">Sebagai Dosen Pembimbing Akademik, Anda bertugas melakukan peninjauan awal terhadap prestasi mahasiswa sebelum diteruskan kepada Admin Prestasi untuk proses verifikasi administrasi.</p>
 </div>
 
+<x-admin.flash-messages />
+
 <!-- Hero Section -->
 <div class="card page-card bg-white hero-card mb-4">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">

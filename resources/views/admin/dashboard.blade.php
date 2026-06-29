@@ -35,6 +35,8 @@
     </p>
 </div>
 
+<x-admin.flash-messages />
+
 <div class="row g-4">
     <div class="col-md-4">
         <div class="card page-card">
