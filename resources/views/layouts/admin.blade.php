@@ -4,11 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - SIKAREMA</title>
+    <title>
+        @yield('title', 'Admin') - SIKAREMA
+    </title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="{{ asset('css/sikarema.css') }}" rel="stylesheet">
+
+    <!-- Reusable admin utilities added in public/css/sikarema.css (page-card, feature-icon, btn-main, utilities) -->
 
     <style>
         body {
@@ -300,131 +304,145 @@
             </div>
 
             @php
-            $role = auth()->user()->hakAkses->nama_akses ?? '';
+                $role = auth()->user()->hakAkses->nama_akses ?? '';
             @endphp
 
-            <div class="sidebar-subtitle">{{ auth()->user()?->hakAkses?->nama_akses === 'Dosen'
-    ? 'Dosen Panel'
-    : 'Admin Panel' }}</div>
+            <div class="sidebar-subtitle">
+                {{ auth()->user()?->hakAkses?->nama_akses === 'Dosen' ? 'Dosen Panel' : 'Admin Panel' }}</div>
 
             <ul class="sidebar-menu">
-                @if($role === 'Dosen')
-                <li>
-                    <a href="{{ route('dosen.dashboard') }}" class="{{ request()->routeIs('dosen.dashboard') ? 'active' : '' }}">
-                        <span class="menu-icon">🏠</span>
-                        <span class="menu-text">Dashboard</span>
-                    </a>
-                </li>
+                @if ($role === 'Dosen')
+                    <li>
+                        <a href="{{ route('dosen.dashboard') }}"
+                            class="{{ request()->routeIs('dosen.dashboard') ? 'active' : '' }}">
+                            <span class="menu-icon">🏠</span>
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{ route('dosen.prestasi-mahasiswa.index') }}" class="{{ request()->routeIs('dosen.prestasi-mahasiswa.*') ? 'active' : '' }}">
-                        <span class="menu-icon">📋</span>
-                        <span class="menu-text">Data Prestasi Mahasiswa</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('dosen.prestasi-mahasiswa.index') }}"
+                            class="{{ request()->routeIs('dosen.prestasi-mahasiswa.*') ? 'active' : '' }}">
+                            <span class="menu-icon">📋</span>
+                            <span class="menu-text">Prestasi Mahasiswa</span>
+                        </a>
+                    </li>
                 @elseif($role === 'Super Admin')
-                <li>
-                    <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                        <span class="menu-icon">🏠</span>
-                        <span class="menu-text">Dashboard</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.dashboard') }}"
+                            class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                            <span class="menu-icon">🏠</span>
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                    </li>
 
-                <li class="sidebar-section-title">Manajemen Sistem</li>
-                <div class="sidebar-section-line"></div>
+                    <li class="sidebar-section-title">Manajemen Sistem</li>
+                    <div class="sidebar-section-line"></div>
 
-                <li>
-                    <a href="{{ route('admin.hak-akses.index') }}" class="{{ request()->routeIs('admin.hak-akses.*') ? 'active' : '' }}">
-                        <span class="menu-icon">🔐</span>
-                        <span class="menu-text">Hak Akses</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.hak-akses.index') }}"
+                            class="{{ request()->routeIs('admin.hak-akses.*') ? 'active' : '' }}">
+                            <span class="menu-icon">🔐</span>
+                            <span class="menu-text">Hak Akses</span>
+                        </a>
+                    </li>
 
-                <li class="sidebar-section-title">Manajemen User</li>
-                <div class="sidebar-section-line"></div>
+                    <li class="sidebar-section-title">Manajemen User</li>
+                    <div class="sidebar-section-line"></div>
 
-                <li>
-                    <a href="{{ route('admin.mahasiswa.index') }}" class="{{ request()->routeIs('admin.mahasiswa.*') ? 'active' : '' }}">
-                        <span class="menu-icon">🎓</span>
-                        <span class="menu-text">Data Mahasiswa</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.mahasiswa.index') }}"
+                            class="{{ request()->routeIs('admin.mahasiswa.*') ? 'active' : '' }}">
+                            <span class="menu-icon">🎓</span>
+                            <span class="menu-text">Data Mahasiswa</span>
+                        </a>
+                    </li>
                 @else
-                <li>
-                    <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                        <span class="menu-icon">🏠</span>
-                        <span class="menu-text">Dashboard</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.dashboard') }}"
+                            class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                            <span class="menu-icon">🏠</span>
+                            <span class="menu-text">Dashboard</span>
+                        </a>
+                    </li>
 
-                <li class="sidebar-section-title">Master Data</li>
-                <div class="sidebar-section-line"></div>
+                    <li class="sidebar-section-title">Master Data</li>
+                    <div class="sidebar-section-line"></div>
 
-                <li>
-                    <a href="{{ route('admin.mahasiswa.index') }}" class="{{ request()->routeIs('admin.mahasiswa.*') ? 'active' : '' }}">
-                        <span class="menu-icon">🎓</span>
-                        <span class="menu-text">Data Mahasiswa</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.mahasiswa.index') }}"
+                            class="{{ request()->routeIs('admin.mahasiswa.*') ? 'active' : '' }}">
+                            <span class="menu-icon">🎓</span>
+                            <span class="menu-text">Data Mahasiswa</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{ route('admin.kategori-prestasi.index') }}" class="{{ request()->routeIs('admin.kategori-prestasi.*') ? 'active' : '' }}">
-                        <span class="menu-icon">🏆</span>
-                        <span class="menu-text">Kategori Prestasi</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.kategori-prestasi.index') }}"
+                            class="{{ request()->routeIs('admin.kategori-prestasi.*') ? 'active' : '' }}">
+                            <span class="menu-icon">🏆</span>
+                            <span class="menu-text">Kategori Prestasi</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{ route('admin.tingkat-prestasi.index') }}" class="{{ request()->routeIs('admin.tingkat-prestasi.*') ? 'active' : '' }}">
-                        <span class="menu-icon">📊</span>
-                        <span class="menu-text">Tingkat Prestasi</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.tingkat-prestasi.index') }}"
+                            class="{{ request()->routeIs('admin.tingkat-prestasi.*') ? 'active' : '' }}">
+                            <span class="menu-icon">📊</span>
+                            <span class="menu-text">Tingkat Prestasi</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{ route('admin.periode-klaim.index') }}" class="{{ request()->routeIs('admin.periode-klaim.*') ? 'active' : '' }}">
-                        <span class="menu-icon">📅</span>
-                        <span class="menu-text">Periode Klaim</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.periode-klaim.index') }}"
+                            class="{{ request()->routeIs('admin.periode-klaim.*') ? 'active' : '' }}">
+                            <span class="menu-icon">📅</span>
+                            <span class="menu-text">Periode Klaim</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{ route('admin.jenis-reward.index') }}" class="{{ request()->routeIs('admin.jenis-reward.*') ? 'active' : '' }}">
-                        <span class="menu-icon">🎁</span>
-                        <span class="menu-text">Jenis Reward</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.jenis-reward.index') }}"
+                            class="{{ request()->routeIs('admin.jenis-reward.*') ? 'active' : '' }}">
+                            <span class="menu-icon">🎁</span>
+                            <span class="menu-text">Jenis Reward</span>
+                        </a>
+                    </li>
 
-                <li class="sidebar-section-title">Transaksi</li>
-                <div class="sidebar-section-line"></div>
+                    <li class="sidebar-section-title">Transaksi</li>
+                    <div class="sidebar-section-line"></div>
 
-                <li>
-                    <a href="{{ route('admin.prestasi-mahasiswa.index') }}" class="{{ request()->routeIs('admin.prestasi-mahasiswa.*') ? 'active' : '' }}">
-                        <span class="menu-icon">✅</span>
-                        <span class="menu-text">Verifikasi Prestasi</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.prestasi-mahasiswa.index') }}"
+                            class="{{ request()->routeIs('admin.prestasi-mahasiswa.*') ? 'active' : '' }}">
+                            <span class="menu-icon">✅</span>
+                            <span class="menu-text">Verifikasi Prestasi</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{ route('admin.klaim-reward.index') }}" class="{{ request()->routeIs('admin.klaim-reward.*') ? 'active' : '' }}">
-                        <span class="menu-icon">💰</span>
-                        <span class="menu-text">Klaim Reward</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.klaim-reward.index') }}"
+                            class="{{ request()->routeIs('admin.klaim-reward.*') ? 'active' : '' }}">
+                            <span class="menu-icon">💰</span>
+                            <span class="menu-text">Klaim Reward</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{ route('admin.pencairan-reward.index') }}" class="{{ request()->routeIs('admin.pencairan-reward.*') ? 'active' : '' }}">
-                        <span class="menu-icon">💳</span>
-                        <span class="menu-text">Pencairan Reward</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.pencairan-reward.index') }}"
+                            class="{{ request()->routeIs('admin.pencairan-reward.*') ? 'active' : '' }}">
+                            <span class="menu-icon">💳</span>
+                            <span class="menu-text">Pencairan Reward</span>
+                        </a>
+                    </li>
 
-                <li>
-                    <a href="{{ route('admin.laporan.index') }}" class="{{ request()->routeIs('admin.laporan.*') ? 'active' : '' }}">
-                        <span class="menu-icon">📄</span>
-                        <span class="menu-text">Laporan</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="{{ route('admin.laporan.index') }}"
+                            class="{{ request()->routeIs('admin.laporan.*') ? 'active' : '' }}">
+                            <span class="menu-icon">📄</span>
+                            <span class="menu-text">Laporan</span>
+                        </a>
+                    </li>
                 @endif
             </ul>
 
@@ -446,19 +464,19 @@
             <div class="topbar d-flex justify-content-between align-items-center">
                 <div>
                     @php
-                    $dashboardRole = auth()->user()->hakAkses->nama_akses ?? '';
+                        $dashboardRole = auth()->user()->hakAkses->nama_akses ?? '';
                     @endphp
 
-                    @if($dashboardRole === 'Super Admin')
-                    <h5 class="fw-bold mb-0">Dashboard Super Admin</h5>
-                    <small class="text-muted">
-                        Kelola manajemen sistem dan hak akses SIKAREMA.
-                    </small>
+                    @if ($dashboardRole === 'Super Admin')
+                        <h5 class="fw-bold mb-0">Dashboard Super Admin</h5>
+                        <small class="text-muted">
+                            Kelola manajemen sistem dan hak akses SIKAREMA.
+                        </small>
                     @else
-                    <h5 class="fw-bold mb-0">Dashboard Admin</h5>
-                    <small class="text-muted">
-                        Kelola sistem pengajuan prestasi dan klaim reward mahasiswa.
-                    </small>
+                        <h5 class="fw-bold mb-0">Dashboard Admin</h5>
+                        <small class="text-muted">
+                            Kelola sistem pengajuan prestasi dan klaim reward mahasiswa.
+                        </small>
                     @endif
                 </div>
 
@@ -490,6 +508,58 @@
                 adminWrapper.classList.contains('sidebar-collapsed')
             );
         });
+
+        // Persist sidebar scroll position and restore on page load/navigation
+        (function() {
+            try {
+                const menu = document.querySelector('.sidebar .sidebar-menu');
+                const key = 'sikarema.sidebar.scrollTop';
+
+                if (!menu) return;
+
+                // restore saved scrollTop
+                const restore = () => {
+                    const val = parseInt(localStorage.getItem(key) || '0', 10) || 0;
+                    menu.scrollTop = val;
+
+                    // ensure active item is visible
+                    const active = menu.querySelector('a.active');
+                    if (active) {
+                        // small timeout to ensure any layout shifts finished
+                        setTimeout(() => {
+                            try {
+                                active.scrollIntoView({
+                                    block: 'nearest'
+                                });
+                            } catch (e) {}
+                        }, 50);
+                    }
+                };
+
+                // save on scroll
+                let saveTimeout = null;
+                menu.addEventListener('scroll', function() {
+                    if (saveTimeout) clearTimeout(saveTimeout);
+                    saveTimeout = setTimeout(() => {
+                        localStorage.setItem(key, String(menu.scrollTop));
+                    }, 50);
+                }, {
+                    passive: true
+                });
+
+                // restore immediately
+                restore();
+
+                // also restore when toggling collapsed state
+                const observer = new MutationObserver(() => restore());
+                observer.observe(document.querySelector('.admin-wrapper') || document.body, {
+                    attributes: true,
+                    attributeFilter: ['class']
+                });
+            } catch (err) {
+                // noop
+            }
+        })();
     </script>
 
 </body>

@@ -262,13 +262,6 @@
                             </a>
                         </div>
                     </form>
-
-                <div class="demo-simple">
-                    <strong>Akun Demo:</strong><br>
-                    Admin: admin@sikarema.test / password<br>
-                    Super Admin: superadmin@sikarema.test / password<br>
-                    Mahasiswa: mahasiswa@sikarema.test / password
-                </div>
                 </div>
             </div>
         </div>

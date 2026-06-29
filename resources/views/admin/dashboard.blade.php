@@ -1,86 +1,114 @@
 @extends('layouts.admin')
 
+@section('title', 'Admin')
+
 @section('content')
-<style>
-    .page-card {
-        border-radius: 20px;
-        box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
-    }
-    .page-card .card-body {
-        padding: 1.35rem 1.4rem;
-    }
-    .feature-icon {
-        width: 56px;
-        height: 56px;
-        border-radius: 18px;
-        box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
-    }
-    .btn-main {
-        padding: 0.85rem 1.35rem;
-    }
-    h4 {
-        font-size: 1.1rem;
-    }
-    .fw-bold + .text-muted {
-        margin-top: 0.2rem;
-    }
-    .row.g-4 {
-        gap: 1.5rem;
-    }
-</style>
-<div class="mb-4">
-    <h2 class="fw-bold">Dashboard Admin</h2>
-    <p class="text-muted">
-        Kelola data utama, verifikasi prestasi, dan klaim reward mahasiswa.
-    </p>
-</div>
 
-<x-admin.flash-messages />
+    <style>
+        /* kept minimal: typography helper retained, other visual utilities moved to public/css/sikarema.css */
+        h4 {
+            font-size: 1.1rem;
+        }
 
-<div class="row g-4">
-    <div class="col-md-4">
-        <div class="card page-card">
-            <div class="card-body p-4">
-                <div class="feature-icon">M</div>
-                <h4 class="fw-bold">Data Mahasiswa</h4>
-                <p class="text-muted">
-                    Mengelola data mahasiswa sesuai data dari Tugas 1.
-                </p>
-                <a href="{{ route('admin.mahasiswa.index') }}" class="btn btn-main">
-                    Kelola Mahasiswa
-                </a>
+        .fw-bold+.text-muted {
+            margin-top: 0.2rem;
+        }
+    </style>
+    <div class="mb-4">
+        <h2 class="fw-bold">Dashboard Admin</h2>
+        <p class="text-muted">
+            Kelola data utama, verifikasi prestasi, dan klaim reward mahasiswa.
+        </p>
+    </div>
+
+    <x-admin.flash-messages />
+
+    @php
+        $totalUsers = \App\Models\User::count();
+        $totalMahasiswa = \App\Models\Mahasiswa::count();
+        $totalPrestasi = \App\Models\PrestasiMahasiswa::count();
+        $totalKlaim = \App\Models\KlaimReward::count();
+    @endphp
+
+    <!-- Ringkasan Statistik -->
+    <div class="stats-row">
+        <div class="stats-tile">
+            <div class="stat-icon">👥</div>
+            <div>
+                <div class="stat-number">{{ $totalUsers }}</div>
+                <div class="stat-label">Total User</div>
+            </div>
+        </div>
+
+        <div class="stats-tile">
+            <div class="stat-icon">🎓</div>
+            <div>
+                <div class="stat-number">{{ $totalMahasiswa }}</div>
+                <div class="stat-label">Total Mahasiswa</div>
+            </div>
+        </div>
+
+        <div class="stats-tile">
+            <div class="stat-icon">🏆</div>
+            <div>
+                <div class="stat-number">{{ $totalPrestasi }}</div>
+                <div class="stat-label">Total Prestasi</div>
+            </div>
+        </div>
+
+        <div class="stats-tile">
+            <div class="stat-icon">💰</div>
+            <div>
+                <div class="stat-number">{{ $totalKlaim }}</div>
+                <div class="stat-label">Total Klaim</div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="card page-card">
-            <div class="card-body p-4">
-                <div class="feature-icon">H</div>
-                <h4 class="fw-bold">Hak Akses</h4>
-                <p class="text-muted">
-                    Melihat role pengguna seperti Admin dan Mahasiswa.
-                </p>
-                <a href="{{ route('admin.hak-akses.index') }}" class="btn btn-main">
-                    Lihat Hak Akses
-                </a>
+    <div class="row g-3">
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="card page-card u-radius-20 u-card-shadow card-standard-height card-hover">
+                <div class="card-body u-card-body-p-4 d-flex flex-column">
+                    <div class="feature-icon u-feature-icon-size">D<i class="bi bi-mortarboard-fill"></i></div>
+                    <h4 class="fw-bold">Data Mahasiswa</h4>
+                    <p class="text-muted small mb-4">
+                        Mengelola data mahasiswa yang terdaftar dalam sistem SIKAREMA.
+                    </p>
+                    <a href="{{ route('admin.mahasiswa.index') }}" class="btn btn-main u-btn-main-padding mt-auto">
+                        Kelola Mahasiswa
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-4">
-        <div class="card page-card">
-            <div class="card-body p-4">
-                <div class="feature-icon">P</div>
-                <h4 class="fw-bold">Prestasi</h4>
-                <p class="text-muted">
-                    Menu untuk verifikasi pengajuan prestasi mahasiswa.
-                </p>
-                <a href="#" class="btn btn-main">
-                    Verifikasi
-                </a>
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="card page-card u-radius-20 u-card-shadow card-standard-height card-hover">
+                <div class="card-body u-card-body-p-4 d-flex flex-column">
+                    <div class="feature-icon u-feature-icon-size">K<i class="bi bi-shield-lock-fill"></i></div>
+                    <h4 class="fw-bold">Klaim Reward</h4>
+                    <p class="text-muted small mb-4">
+                        Memproses dan memverifikasi pengajuan klaim reward mahasiswa.
+                    </p>
+                    <a href="{{ route('admin.klaim-reward.index') }}" class="btn btn-main u-btn-main-padding mt-auto">
+                        Lihat Klaim Reward
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="card page-card u-radius-20 u-card-shadow card-standard-height card-hover">
+                <div class="card-body u-card-body-p-4 d-flex flex-column">
+                    <div class="feature-icon u-feature-icon-size">P<i class="bi bi-trophy-fill"></i></div>
+                    <h4 class="fw-bold">Prestasi</h4>
+                    <p class="text-muted small mb-4">
+                        Menu untuk verifikasi pengajuan prestasi mahasiswa.
+                    </p>
+                    <a href="#" class="btn btn-main u-btn-main-padding mt-auto">
+                        Verifikasi
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
