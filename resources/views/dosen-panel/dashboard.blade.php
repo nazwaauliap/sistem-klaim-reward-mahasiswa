@@ -11,93 +11,92 @@
 
     <x-admin.flash-messages />
 
-    <div class="stats-row mb-4">
-        <div class="stats-tile">
-            <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
-            <div>
-                <div class="stat-number">{{ $menunggu }}</div>
-                <div class="stat-label">Menunggu Review</div>
-            </div>
-        </div>
-        <div class="stats-tile">
-            <div class="stat-icon"><i class="bi bi-check-circle-fill"></i></div>
-            <div>
-                <div class="stat-number">{{ $disetujui }}</div>
-                <div class="stat-label">Disetujui</div>
-            </div>
-        </div>
-        <div class="stats-tile">
-            <div class="stat-icon"><i class="bi bi-pencil-fill"></i></div>
-            <div>
-                <div class="stat-number">{{ $perluRevisi }}</div>
-                <div class="stat-label">Perlu Revisi</div>
-            </div>
-        </div>
-        <div class="stats-tile">
-            <div class="stat-icon"><i class="bi bi-x-circle-fill"></i></div>
-            <div>
-                <div class="stat-number">{{ $ditolak }}</div>
-                <div class="stat-label">Ditolak</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-3 mb-4">
-        <div class="col-12 col-lg-4">
-            <div class="card page-card u-radius-20 u-card-shadow card-standard-height card-hover">
-                <div class="card-body u-card-body-p-4 d-flex flex-column">
-                    <div class="d-flex align-items-center gap-3 mb-3">
-                        <div
-                            class="u-feature-icon-size bg-light text-primary d-inline-flex align-items-center justify-content-center">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <div>
-                            <h5 class="fw-bold mb-1">Verifikasi Prestasi</h5>
-                            <p class="text-muted small mb-0">Lihat daftar prestasi mahasiswa dan mulai proses verifikasi
-                                dengan tampilan ringkas dan terstruktur.</p>
-                        </div>
+    {{-- ── Stat Cards ── --}}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3 mb-4">
+        @php
+            $stats = [
+                ['icon' => 'bi-hourglass-split',  'cls' => 'stat-icon-waiting', 'val' => $menunggu,    'label' => 'Menunggu Review', 'desc' => 'Menunggu keputusan'],
+                ['icon' => 'bi-check-circle-fill', 'cls' => 'stat-icon-success', 'val' => $disetujui,   'label' => 'Disetujui',       'desc' => 'Telah diverifikasi'],
+                ['icon' => 'bi-pencil-fill',       'cls' => 'stat-icon-warning', 'val' => $perluRevisi, 'label' => 'Perlu Revisi',    'desc' => 'Perlu perbaikan'],
+                ['icon' => 'bi-x-circle-fill',     'cls' => 'stat-icon-danger',  'val' => $ditolak,     'label' => 'Ditolak',         'desc' => 'Tidak memenuhi syarat'],
+            ];
+        @endphp
+        @foreach ($stats as $s)
+        <div class="col">
+            <div class="card page-card u-radius-20 u-card-shadow card-hover stat-card h-100">
+                <div class="card-body">
+                    <div class="stat-icon {{ $s['cls'] }}">
+                        <i class="bi {{ $s['icon'] }}"></i>
                     </div>
-                    <div class="mt-3">
-                        <div class="text-uppercase small text-muted mb-1">Menunggu Review</div>
-                        <div class="h1 fw-bold mb-3">{{ $menunggu }}</div>
-                    </div>
-                    <div class="mt-auto">
-                        <a href="{{ route('dosen.prestasi-mahasiswa.index') }}"
-                            class="btn btn-main u-btn-main-padding">Mulai Review</a>
+                    <div class="stat-card-text">
+                        <div class="stat-number">{{ $s['val'] }}</div>
+                        <div class="stat-card-title">{{ $s['label'] }}</div>
+                        <div class="stat-card-desc">{{ $s['desc'] }}</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-12 col-lg-8">
-            <div class="card page-card u-radius-20 u-card-shadow card-standard-height card-hover table-card shadow-sm">
-                <div class="card-body u-card-body-p-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
+        @endforeach
+    </div>
+
+    {{-- ── Verifikasi + Ringkasan ── --}}
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-lg-4">
+            <div class="card page-card u-radius-20 u-card-shadow card-hover h-100">
+                <div class="card-body u-card-body-p-4 d-flex flex-column h-100">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <div class="u-feature-icon-size bg-light text-primary">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
                         <div>
-                            <h5 class="fw-bold mb-0">Ringkasan Prestasi Terbaru</h5>
-                            <p class="text-muted small mb-0">10 prestasi terbaru yang memerlukan keputusan Anda sebagai
-                                Pembimbing Akademik.</p>
+                            <h5 class="fw-bold mb-1">Verifikasi Prestasi</h5>
+                            <p class="text-muted small mb-0">Lihat daftar prestasi mahasiswa, lakukan review, dan verifikasi secara cepat.</p>
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
+                    <div class="card-divider"></div>
+
+                    <div class="mt-3">
+                        <div class="text-uppercase small text-muted mb-1">Menunggu Review</div>
+                        <div class="display-5 fw-bold mb-1">{{ $menunggu }}</div>
+                        <p class="small text-muted mb-0">Jumlah prestasi yang saat ini menunggu keputusan Anda.</p>
+                    </div>
+                    <div class="mt-auto pt-3">
+                        <a href="{{ route('dosen.prestasi-mahasiswa.index') }}"
+                            class="btn btn-main u-btn-main-padding w-100">Mulai Review</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-8">
+            <div class="card page-card u-radius-20 u-card-shadow card-hover table-card h-100">
+                <div class="card-body u-card-body-p-4 d-flex flex-column h-100">
+                    <div class="mb-3">
+                        <h5 class="fw-bold mb-1">Ringkasan Prestasi Terbaru</h5>
+                        <p class="text-muted small mb-0">10 prestasi terbaru yang memerlukan keputusan Anda sebagai Pembimbing Akademik.</p>
+                    </div>
+
+                    <div class="table-responsive mb-3">
+                        <table class="table table-hover align-middle mb-0" style="min-width:520px">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Mahasiswa</th>
+                                    <th style="width:18%">Mahasiswa</th>
                                     <th>Prestasi</th>
-                                    <th class="table-width-160">Status</th>
-                                    <th class="table-width-140">Tanggal</th>
-                                    <th class="table-width-140">Aksi</th>
+                                    <th style="width:145px">Status</th>
+                                    <th style="width:110px">Tanggal</th>
+                                    <th style="width:90px">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($latestPrestasis as $prestasi)
                                     <tr>
-                                        <td>{{ $prestasi->mahasiswa->nama ?? '-' }}</td>
+                                        <td class="fw-medium">{{ $prestasi->mahasiswa->nama ?? '-' }}</td>
                                         <td>
                                             <div class="fw-bold">{{ $prestasi->nama_kegiatan }}</div>
-                                            <span
-                                                class="badge bg-secondary small mt-1">{{ $prestasi->kategoriPrestasi->nama_kategori ?? '-' }}</span>
+                                            <span class="badge bg-secondary badge-category small mt-1 d-inline-block">
+                                                {{ $prestasi->kategoriPrestasi->nama_kategori ?? '-' }}
+                                            </span>
                                         </td>
                                         <td>
                                             @if ($prestasi->status_dosen === 'Disetujui')
@@ -110,7 +109,7 @@
                                                 <span class="badge bg-warning text-dark">Menunggu Review</span>
                                             @endif
                                         </td>
-                                        <td>{{ $prestasi->tanggal_kegiatan }}</td>
+                                        <td class="small text-muted">{{ $prestasi->tanggal_kegiatan }}</td>
                                         <td>
                                             <a href="{{ route('dosen.prestasi-mahasiswa.show', $prestasi->id_prestasi) }}"
                                                 class="btn btn-outline-primary btn-sm">Review</a>
@@ -118,55 +117,56 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center text-muted py-4">Belum ada prestasi terbaru.
-                                        </td>
+                                        <td colspan="5" class="text-center text-muted py-4">Belum ada prestasi terbaru.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="mt-auto d-flex justify-content-end">
+                        <a href="{{ route('dosen.prestasi-mahasiswa.index') }}" class="small text-primary">Lihat semua prestasi</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Prestasi yang Perlu Direview Hari Ini -->
+    {{-- ── Review Hari Ini + Aktivitas ── --}}
     @php
         $toReview = collect($latestPrestasis ?? [])
             ->where('status_dosen', 'Menunggu')
             ->take(5);
     @endphp
 
-    <div class="row g-3 my-4">
+    <div class="row g-3 mb-4">
         <div class="col-12 col-lg-5">
-            <div class="card page-card u-radius-20 u-card-shadow shadow-sm">
-                <div class="card-body u-card-body-p-4">
-                    <h5 class="fw-bold">Prestasi yang Perlu Direview Hari Ini</h5>
+            <div class="card page-card u-radius-20 u-card-shadow card-hover h-100">
+                <div class="card-body u-card-body-p-4 d-flex flex-column h-100">
+                    <h5 class="fw-bold mb-1">Prestasi yang Perlu Direview Hari Ini</h5>
                     <p class="text-muted small mb-3">Maksimal 5 item yang sedang menunggu keputusan Anda.</p>
 
                     @if ($toReview->isEmpty())
-                        <div class="text-center text-muted py-4">Tidak ada prestasi untuk direview hari ini.</div>
+                        <div class="text-center text-muted py-4">
+                            <i class="bi bi-check2-all fs-2 d-block mb-2 text-success opacity-75"></i>
+                            Tidak ada prestasi untuk direview hari ini.
+                        </div>
                     @else
-                        <div class="list-group list-group-flush">
+                        <div class="dashboard-review-list">
                             @foreach ($toReview as $item)
-                                <div class="list-group-item rounded-3 mb-2 border-0 bg-light py-3">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <div
-                                            class="bg-white rounded-circle d-flex align-items-center justify-content-center p-3 shadow-sm">
-                                            <i class="bi bi-hourglass-split text-primary"></i>
+                                <div class="review-item-card">
+                                    <div class="d-flex align-items-center gap-2 overflow-hidden">
+                                        <div class="review-item-icon bg-white shadow-sm flex-shrink-0">
+                                            <i class="bi bi-person-fill text-primary"></i>
                                         </div>
-                                        <div class="flex-fill">
-                                            <div class="fw-bold">{{ $item->mahasiswa->nama ?? '-' }}</div>
-                                            <div class="small text-muted">{{ Str::limit($item->nama_kegiatan, 60) }}</div>
-                                            <div class="small text-muted mt-1">
-                                                {{ optional($item->created_at)->diffForHumans() ?? $item->tanggal_kegiatan }}
-                                            </div>
-                                        </div>
-                                        <div class="text-end">
-                                            <a href="{{ route('dosen.prestasi-mahasiswa.show', $item->id_prestasi) }}"
-                                                class="btn btn-sm btn-outline-primary">Review</a>
+                                        <div class="overflow-hidden">
+                                            <div class="fw-bold text-truncate">{{ $item->mahasiswa->nama ?? '-' }}</div>
+                                            <div class="small text-muted text-truncate">{{ Str::limit($item->nama_kegiatan, 50) }}</div>
+                                            <div class="small text-muted">{{ optional($item->created_at)->diffForHumans() ?? $item->tanggal_kegiatan }}</div>
                                         </div>
                                     </div>
+                                    <a href="{{ route('dosen.prestasi-mahasiswa.show', $item->id_prestasi) }}"
+                                        class="btn btn-sm btn-outline-primary flex-shrink-0">Review</a>
                                 </div>
                             @endforeach
                         </div>
@@ -176,14 +176,12 @@
         </div>
 
         <div class="col-12 col-lg-7">
-            <div class="card page-card u-radius-20 u-card-shadow shadow-sm">
-                <div class="card-body u-card-body-p-4">
-                    <h5 class="fw-bold">Aktivitas Terbaru</h5>
+            <div class="card page-card u-radius-20 u-card-shadow card-hover h-100">
+                <div class="card-body u-card-body-p-4 d-flex flex-column h-100">
+                    <h5 class="fw-bold mb-1">Aktivitas Terbaru</h5>
                     <p class="text-muted small mb-3">Riwayat singkat pengajuan, revisi, dan rekomendasi.</p>
 
-                    @php
-                        $activities = collect($latestPrestasis ?? [])->take(6);
-                    @endphp
+                    @php $activities = collect($latestPrestasis ?? [])->take(6); @endphp
 
                     @if ($activities->isEmpty())
                         <div class="text-center text-muted py-4">Belum ada aktivitas terbaru.</div>
@@ -193,34 +191,23 @@
                                 @php
                                     $time = optional($act->created_at)->diffForHumans() ?? $act->tanggal_kegiatan;
                                     switch ($act->status_dosen) {
-                                        case 'Perlu Revisi':
-                                            $message = 'Permintaan revisi oleh mahasiswa';
-                                            $icon = 'bi-pencil-fill';
-                                            break;
-                                        case 'Disetujui':
-                                            $message = 'Direkomendasikan ke Admin';
-                                            $icon = 'bi-check-circle-fill';
-                                            break;
-                                        case 'Ditolak':
-                                            $message = 'Prestasi ditolak oleh Dosen';
-                                            $icon = 'bi-x-circle-fill';
-                                            break;
-                                        default:
-                                            $message = 'Pengajuan prestasi baru';
-                                            $icon = 'bi-clock-history';
+                                        case 'Perlu Revisi': $msg = 'Permintaan revisi oleh mahasiswa'; $icon = 'bi-pencil-fill'; break;
+                                        case 'Disetujui':    $msg = 'Direkomendasikan ke Admin';        $icon = 'bi-check-circle-fill'; break;
+                                        case 'Ditolak':      $msg = 'Prestasi ditolak oleh Dosen';      $icon = 'bi-x-circle-fill'; break;
+                                        default:             $msg = 'Pengajuan prestasi baru';           $icon = 'bi-clock-history';
                                     }
                                 @endphp
-                                <div class="d-flex align-items-start gap-3 mb-3">
-                                    <div
-                                        class="bg-light rounded-circle d-flex align-items-center justify-content-center p-3 shadow-sm">
-                                        <i class="bi {{ $icon }} text-primary"></i>
+                                <div class="timeline-item d-flex align-items-start gap-3">
+                                    <div class="timeline-marker">
+                                        <span class="timeline-dot">
+                                            <i class="bi {{ $icon }} text-primary"></i>
+                                        </span>
                                     </div>
                                     <div class="flex-fill">
-                                        <div class="fw-bold">{{ Str::limit($act->nama_kegiatan, 60) }}</div>
-                                        <div class="small text-muted">{{ $message }} —
-                                            {{ $act->mahasiswa->nama ?? '-' }}</div>
+                                        <div class="fw-bold text-truncate">{{ Str::limit($act->nama_kegiatan, 55) }}</div>
+                                        <div class="small text-muted">{{ $msg }} — {{ $act->mahasiswa->nama ?? '-' }}</div>
                                     </div>
-                                    <div class="text-end small text-muted">{{ $time }}</div>
+                                    <div class="text-end small text-muted flex-shrink-0 ms-2">{{ $time }}</div>
                                 </div>
                             @endforeach
                         </div>
@@ -229,4 +216,5 @@
             </div>
         </div>
     </div>
+
 @endsection
