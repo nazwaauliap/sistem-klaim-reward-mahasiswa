@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Mahasiswa')
+
 @section('content')
 <style>
     .mahasiswa-table {

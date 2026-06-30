@@ -1,5 +1,7 @@
 @extends('layouts.mahasiswa')
 
+@section('title', 'Mahasiswa')
+
 @section('content')
 <div class="hero-mahasiswa">
     <span class="badge-soft">Dashboard Mahasiswa</span>
