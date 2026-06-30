@@ -57,7 +57,59 @@
             margin-bottom: 6px;
         }
 
-        .sidebar-brand { font-size: 24px; font-weight: 800; letter-spacing: 1px; white-space: nowrap; }
+.sidebar-brand-wrap{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    height:60px;
+}
+
+.logo-full{
+    width:180px;
+    height:auto;
+    display:block;
+    transition:.3s;
+}
+
+.logo-mini{
+    width:42px;
+    height:42px;
+    display:none;
+    transition:.3s;
+}
+
+.sidebar-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+}
+
+.admin-wrapper.sidebar-collapsed .sidebar-header{
+    flex-direction:column;
+}
+
+        .sidebar-logo-icon {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .sidebar-brand {
+    display: flex;
+    align-items: center;
+    padding: 20px 20px 10px;
+}
 
         .sidebar-toggle {
             width: 38px; height: 38px;
@@ -149,13 +201,24 @@
         /* Sidebar collapsed */
         .admin-wrapper.sidebar-collapsed .sidebar { width: 78px; padding: 18px 10px; }
         .admin-wrapper.sidebar-collapsed .content { margin-left: 78px; width: calc(100% - 78px); }
+        .admin-wrapper.sidebar-collapsed .logo-full{
+    display:none;
+}
+
+.admin-wrapper.sidebar-collapsed .logo-mini{
+    display:block;
+}
         .admin-wrapper.sidebar-collapsed .sidebar-brand,
         .admin-wrapper.sidebar-collapsed .sidebar-subtitle,
         .admin-wrapper.sidebar-collapsed .menu-text,
         .admin-wrapper.sidebar-collapsed .sidebar-footer,
         .admin-wrapper.sidebar-collapsed .sidebar-section-title,
         .admin-wrapper.sidebar-collapsed .sidebar-section-line { display: none; }
-        .admin-wrapper.sidebar-collapsed .sidebar-header { justify-content: center; }
+        .admin-wrapper.sidebar-collapsed .sidebar-header {
+            flex-direction: column;
+            justify-content: center;
+            gap: 10px;
+        }
         .admin-wrapper.sidebar-collapsed .sidebar-toggle { width: 44px; height: 44px; }
         .admin-wrapper.sidebar-collapsed .sidebar-menu { padding-right: 0; margin-top: 18px; }
         .admin-wrapper.sidebar-collapsed .sidebar-menu a { justify-content: center; padding: 11px 0; gap: 0; }
@@ -168,7 +231,7 @@
             .content { margin-left: 78px; width: calc(100% - 78px); padding: 18px; }
             .sidebar-brand, .sidebar-subtitle, .menu-text, .sidebar-footer,
             .sidebar-section-title, .sidebar-section-line { display: none; }
-            .sidebar-header { justify-content: center; }
+            .sidebar-header { flex-direction: column; justify-content: center; gap: 10px; }
             .sidebar-menu { padding-right: 0; margin-top: 18px; }
             .sidebar-menu a { justify-content: center; padding: 11px 0; gap: 0; }
             .topbar { padding: 18px; }
@@ -326,7 +389,19 @@
     <div class="admin-wrapper">
         <aside class="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-brand">SIKAREMA</div>
+                <div class="sidebar-brand-wrap">
+
+                    <img
+                        src="{{ asset('images/SIKAREMA.png') }}"
+                        class="logo-full"
+                        alt="SIKAREMA">
+
+                    <img
+                        src="{{ asset('images/mini-SIKAREMA.png') }}"
+                        class="logo-mini"
+                        alt="SIKAREMA">
+
+                </div>
                 <button type="button" id="sidebarToggle" class="sidebar-toggle">☰</button>
             </div>
 
@@ -476,6 +551,42 @@
             adminWrapper.classList.toggle('sidebar-collapsed');
             localStorage.setItem('sidebar-collapsed', adminWrapper.classList.contains('sidebar-collapsed'));
         });
+
+        // Persist sidebar scroll position across page navigations
+        (function() {
+            const KEY = 'sikarema.sidebar.scrollTop';
+            const menu = document.querySelector('.sidebar .sidebar-menu');
+            if (!menu) return;
+
+            // Restore scroll position immediately (before paint) to avoid visible jump
+            const saved = parseInt(sessionStorage.getItem(KEY) || '0', 10);
+            if (saved > 0) {
+                menu.scrollTop = saved;
+            }
+
+            // Save scroll position continuously while scrolling
+            let saveTimeout = null;
+            menu.addEventListener('scroll', function() {
+                if (saveTimeout) clearTimeout(saveTimeout);
+                saveTimeout = setTimeout(() => {
+                    sessionStorage.setItem(KEY, String(menu.scrollTop));
+                }, 80);
+            }, { passive: true });
+
+            // Save scroll position right before navigating away (covers clicks
+            // that happen faster than the debounce above)
+            menu.addEventListener('click', function(e) {
+                const link = e.target.closest('a');
+                if (link) {
+                    sessionStorage.setItem(KEY, String(menu.scrollTop));
+                }
+            });
+
+            // Also save on page unload as a safety net
+            window.addEventListener('beforeunload', function() {
+                sessionStorage.setItem(KEY, String(menu.scrollTop));
+            });
+        })();
     </script>
 
 </body>

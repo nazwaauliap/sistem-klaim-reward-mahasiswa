@@ -21,6 +21,8 @@
     use App\Models\User;
     use App\Models\Mahasiswa;
     use App\Models\HakAkses;
+    use App\Models\PrestasiMahasiswa;
+    use App\Models\KlaimReward;
 
     Route::get('/', function () {
         return view('welcome');
@@ -44,7 +46,12 @@
                     ]);
                 }
 
-                return view('admin.dashboard');
+                return view('admin.dashboard', [
+                    'totalUsers' => User::count(),
+                    'totalMahasiswa' => Mahasiswa::count(),
+                    'totalPrestasi' => PrestasiMahasiswa::count(),
+                    'totalKlaim' => KlaimReward::count(),
+                ]);
             })->name('dashboard');
 
             Route::resource('mahasiswa', MahasiswaController::class);

@@ -1,100 +1,102 @@
 @extends('layouts.mahasiswa')
 
+@section('title', 'Klaim Reward')
+
 @section('content')
-<div class="mb-4">
-    <h2 class="fw-bold">Ajukan Klaim Reward</h2>
-    <p class="text-muted">
-        Pilih prestasi yang sudah terverifikasi untuk diajukan klaim reward.
-    </p>
-</div>
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Terjadi kesalahan!</strong>
-        <ul class="mb-0 mt-2">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    <div class="mb-4">
+        <a href="{{ route('mahasiswa.dashboard') }}" class="link-small">
+            <i class="bi bi-arrow-left"></i> Kembali ke Dashboard
+        </a>
+        <h2 class="hero-title mt-2 mb-1">Klaim Reward</h2>
+        <p class="hero-text mb-0">
+            Ajukan klaim reward atas prestasi yang telah diverifikasi.
+        </p>
     </div>
-@endif
 
-@if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
+    @if(session('success'))
+        <div class="alert alert-success rounded-3">
+            {{ session('success') }}
+        </div>
+    @endif
 
-<div class="card page-card">
-    <div class="card-body p-4">
-        <form action="{{ route('mahasiswa.klaim-reward.store') }}" method="POST">
-            @csrf
+    @if(session('error'))
+        <div class="alert alert-danger rounded-3">
+            {{ session('error') }}
+        </div>
+    @endif
 
-            <div class="mb-3">
-                <label class="form-label">Prestasi Terverifikasi</label>
-                <select name="id_prestasi" class="form-select" required>
-                    <option value="">-- Pilih Prestasi --</option>
-
-                    @foreach($prestasiTerverifikasi as $prestasi)
-                        <option value="{{ $prestasi->id_prestasi }}" {{ old('id_prestasi') == $prestasi->id_prestasi ? 'selected' : '' }}>
-                            {{ $prestasi->mahasiswa->nama ?? '-' }} - {{ $prestasi->nama_kegiatan }} - {{ $prestasi->tingkatPrestasi->nama_tingkat ?? '-' }}
-                        </option>
-                    @endforeach
-                </select>
-
-                @if($prestasiTerverifikasi->isEmpty())
-                    <small class="text-danger">
-                        Belum ada prestasi terverifikasi yang dapat diajukan klaim.
-                    </small>
-                @endif
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Periode Klaim</label>
-                <select name="id_periode" class="form-select" required>
-                    <option value="">-- Pilih Periode Klaim --</option>
-
-                    @foreach($periodeDibuka as $periode)
-                        <option value="{{ $periode->id_periode }}" {{ old('id_periode') == $periode->id_periode ? 'selected' : '' }}>
-                            {{ $periode->nama_periode }} | {{ $periode->tanggal_mulai }} s/d {{ $periode->tanggal_selesai }}
-                        </option>
-                    @endforeach
-                </select>
-
-                @if($periodeDibuka->isEmpty())
-                    <small class="text-danger">
-                        Saat ini belum ada periode klaim yang dibuka.
-                    </small>
-                @endif
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Jenis Reward</label>
-                <select name="id_reward" class="form-select" required>
-                    <option value="">-- Pilih Jenis Reward --</option>
-
-                    @foreach($jenisRewards as $reward)
-                        <option value="{{ $reward->id_reward }}" {{ old('id_reward') == $reward->id_reward ? 'selected' : '' }}>
-                            {{ $reward->nama_reward }} - {{ $reward->tingkatPrestasi->nama_tingkat ?? '-' }} - Rp {{ number_format($reward->nominal, 0, ',', '.') }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="alert alert-info">
-                Pastikan prestasi yang dipilih sudah berstatus <strong>Terverifikasi</strong> dan periode klaim sedang <strong>Dibuka</strong>.
-            </div>
-
-            <div class="d-flex gap-2 mt-3">
-                <button type="submit" class="btn btn-main">
-                    Ajukan Klaim Reward
-                </button>
-
-                <a href="{{ route('mahasiswa.klaim-reward.index') }}" class="btn btn-secondary rounded-pill px-4">
-                    Kembali
+    <div class="card table-card-v2">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <h5 class="section-block-title mb-0">Daftar Klaim Reward</h5>
+                <a href="{{ route('mahasiswa.klaim-reward.create') }}" class="btn btn-main">
+                    <i class="bi bi-plus-circle me-1"></i> Ajukan Klaim Reward
                 </a>
             </div>
-        </form>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Prestasi</th>
+                            <th>Periode</th>
+                            <th>Reward</th>
+                            <th>Tanggal Pengajuan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @forelse($klaimRewards as $klaim)
+                            @php
+                                $statusVal = $klaim->status_klaim ?? 'Menunggu';
+                                $statusCls = match($statusVal) {
+                                    'Disetujui' => 'bg-success',
+                                    'Ditolak' => 'bg-danger',
+                                    default => 'bg-warning text-dark',
+                                };
+                            @endphp
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>
+                                    <div class="fw-semibold" style="color: var(--dark-blue)">
+                                        {{ $klaim->prestasiMahasiswa->nama_kegiatan ?? '-' }}
+                                    </div>
+                                    <div class="text-muted small">
+                                        Tingkat {{ $klaim->prestasiMahasiswa->tingkatPrestasi->nama_tingkat ?? '-' }}
+                                    </div>
+                                </td>
+                                <td>{{ $klaim->periodeKlaim->nama_periode ?? '-' }}</td>
+                                <td>
+                                    <div>{{ $klaim->jenisReward->nama_reward ?? '-' }}</div>
+                                    <div class="text-muted small">
+                                        Rp {{ number_format($klaim->jenisReward->nominal ?? 0, 0, ',', '.') }}
+                                    </div>
+                                </td>
+                                <td>{{ $klaim->tanggal_pengajuan }}</td>
+                                <td>
+                                    <span class="badge badge-status {{ $statusCls }}">{{ $statusVal }}</span>
+                                    @if($klaim->catatan)
+                                        <div class="text-muted small mt-1">{{ $klaim->catatan }}</div>
+                                    @endif
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6">
+                                    <div class="empty-state">
+                                        <i class="bi bi-gift"></i>
+                                        <p>Belum ada klaim reward yang diajukan.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
+
 @endsection

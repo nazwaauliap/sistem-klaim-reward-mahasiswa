@@ -1,102 +1,91 @@
 @extends('layouts.mahasiswa')
 
+@section('title', 'Prestasi Saya')
+
 @section('content')
-<style>
-    .prestasi-table {
-        min-width: 1100px;
-    }
 
-    .prestasi-table th,
-    .prestasi-table td {
-        padding: 14px 16px;
-        font-size: 14px;
-        vertical-align: middle;
-        white-space: nowrap;
-    }
-
-    .table-wrapper {
-        overflow-x: auto;
-    }
-</style>
-
-<div class="mb-4">
-    <h2 class="fw-bold">Prestasi Saya</h2>
-    <p class="text-muted">
-        Daftar prestasi yang sudah diajukan dan status verifikasinya.
-    </p>
-</div>
-
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
+    <div class="mb-4">
+        <a href="{{ route('mahasiswa.dashboard') }}" class="link-small">
+            <i class="bi bi-arrow-left"></i> Kembali ke Dashboard
+        </a>
+        <h2 class="hero-title mt-2 mb-1">Prestasi Saya</h2>
+        <p class="hero-text mb-0">Berikut daftar seluruh prestasi yang telah Anda ajukan.</p>
     </div>
-@endif
 
-<div class="card page-card">
-    <div class="card-body p-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h5 class="fw-bold mb-0">Daftar Pengajuan Prestasi</h5>
-
-            <a href="{{ route('mahasiswa.prestasi.create') }}" class="btn btn-main">
-                + Ajukan Prestasi
-            </a>
+    @if(session('success'))
+        <div class="alert alert-success rounded-3">
+            {{ session('success') }}
         </div>
+    @endif
 
-        <div class="table-responsive table-wrapper">
-            <table class="table table-hover table-bordered align-middle prestasi-table">
-                <thead class="table-primary">
-                    <tr>
-                        <th>No</th>
-                        <th>Mahasiswa</th>
-                        <th>Kategori</th>
-                        <th>Tingkat</th>
-                        <th>Nama Kegiatan</th>
-                        <th>Juara</th>
-                        <th>Sertifikat</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
+    @if(session('error'))
+        <div class="alert alert-danger rounded-3">
+            {{ session('error') }}
+        </div>
+    @endif
 
-                <tbody>
-                    @forelse($prestasiMahasiswas as $prestasi)
+    <div class="card table-card-v2">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                <h5 class="section-block-title mb-0">Daftar Prestasi</h5>
+                <a href="{{ route('mahasiswa.prestasi.create') }}" class="btn btn-main">
+                    <i class="bi bi-plus-circle me-1"></i> Ajukan Prestasi
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $prestasi->mahasiswa->nama ?? '-' }}</td>
-                            <td>{{ $prestasi->kategoriPrestasi->nama_kategori ?? '-' }}</td>
-                            <td>{{ $prestasi->tingkatPrestasi->nama_tingkat ?? '-' }}</td>
-                            <td>{{ $prestasi->nama_kegiatan }}</td>
-                            <td>{{ $prestasi->juara }}</td>
-                            <td>
-                                @if($prestasi->file_sertifikat)
-                                    <a href="{{ asset('storage/' . $prestasi->file_sertifikat) }}" target="_blank" class="btn btn-sm btn-info">
-                                        Lihat
-                                    </a>
-                                @else
-                                    -
-                                @endif
-                            </td>
-                            <td>
-                                @if($prestasi->status_verifikasi == 'Terverifikasi')
-                                    <span class="badge bg-success px-3 py-2">Terverifikasi</span>
-                                @elseif($prestasi->status_verifikasi == 'Ditolak')
-                                    <span class="badge bg-danger px-3 py-2">Ditolak</span>
-                                @elseif($prestasi->status_verifikasi == 'Revisi')
-                                    <span class="badge bg-warning px-3 py-2">Revisi</span>
-                                @else
-                                    <span class="badge bg-secondary px-3 py-2">Menunggu</span>
-                                @endif
-                            </td>
+                            <th>No</th>
+                            <th>Nama Kegiatan</th>
+                            <th>Kategori</th>
+                            <th>Tingkat</th>
+                            <th>Tanggal</th>
+                            <th>Status</th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="8" class="text-center text-muted py-4">
-                                Belum ada prestasi yang diajukan.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                        @forelse($prestasiMahasiswas as $prestasi)
+                            @php
+                                $statusVal = $prestasi->status_verifikasi ?? 'Menunggu';
+                                $statusCls = match($statusVal) {
+                                    'Terverifikasi' => 'bg-success',
+                                    'Ditolak' => 'bg-danger',
+                                    'Revisi' => 'bg-secondary',
+                                    default => 'bg-warning text-dark',
+                                };
+                            @endphp
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>
+                                    <div class="fw-semibold" style="color: var(--dark-blue)">
+                                        {{ $prestasi->nama_kegiatan }}
+                                    </div>
+                                    <div class="text-muted small">{{ $prestasi->penyelenggara ?? '-' }}</div>
+                                </td>
+                                <td>{{ $prestasi->kategoriPrestasi->nama_kategori ?? '-' }}</td>
+                                <td>{{ $prestasi->tingkatPrestasi->nama_tingkat ?? '-' }}</td>
+                                <td>{{ $prestasi->tanggal_kegiatan }}</td>
+                                <td>
+                                    <span class="badge badge-status {{ $statusCls }}">{{ $statusVal }}</span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6">
+                                    <div class="empty-state">
+                                        <i class="bi bi-inbox"></i>
+                                        <p>Belum ada prestasi yang diajukan.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+
 @endsection
