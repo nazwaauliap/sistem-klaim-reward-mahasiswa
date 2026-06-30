@@ -72,8 +72,8 @@
         }
  
 .navbar-logo-img {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     object-fit: contain;
     flex-shrink: 0;
     margin: -115px 0;

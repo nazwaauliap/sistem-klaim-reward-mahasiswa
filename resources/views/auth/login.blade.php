@@ -4,217 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - SIKAREMA</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+    
     <style>
-        :root {
-            --primary-blue: #0b5ed7;
-            --dark-blue: #0b315f;
-            --green: #12b886;
-            --text-muted: #64748b;
-        }
-
         body {
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            background:
-                radial-gradient(circle at top left, rgba(18, 184, 134, 0.18), transparent 35%),
-                linear-gradient(135deg, #eef9ff, #eafff7);
-            color: #1e293b;
-        }
-
-        .login-container {
+            margin: 0;
+            font-family: Poppins, sans-serif;
+            background: linear-gradient(135deg, #eef7ff, #effff8);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 30px 16px;
+            padding: 30px;
         }
-
-        .login-wrapper {
+        .wrapper {
+            max-width: 1180px;
             width: 100%;
-            max-width: 980px;
-            background: white;
-            border-radius: 30px;
+            background: #fff;
+            border-radius: 32px;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
-            margin: 0 auto;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, .12);
         }
-
-        .login-wrapper .row {
-            align-items: stretch;
-        }
-
-        .login-wrapper .col-md-5,
-        .login-wrapper .col-md-7 {
-            display: flex;
-        }
-
-        .login-left,
-        .login-right {
-            width: 100%;
+        .left {
+            background: linear-gradient(180deg, #0b315f, #0b5ed7, #12b886);
+            color: #fff;
+            padding: 60px;
             height: 100%;
-        }
-
-        .login-left {
-            background: linear-gradient(180deg, var(--dark-blue), var(--primary-blue), var(--green));
-            color: white;
-            min-height: 520px;
-            padding: 46px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
-            border-top-left-radius: 30px;
-            border-bottom-left-radius: 30px;
         }
-
-        .login-left::after {
-            content: "";
-            position: absolute;
-            width: 230px;
-            height: 230px;
+        .logo {
+            width: 220px;
+            margin-bottom: 40px;
+        }
+        .trophy {
+            width: 100%;
+            max-width: 320px;
+            margin-top: 40px;
+            align-self: center;
+        }
+        .right {
+            padding: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+        }
+        .avatar {
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.12);
-            bottom: -80px;
-            right: -70px;
-        }
-
-        .brand-title {
-            font-weight: 800;
-            font-size: 42px;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .brand-text {
-            line-height: 1.8;
-            opacity: 0.95;
-            position: relative;
-            z-index: 1;
-        }
-
-        .login-right {
-            padding: 46px;
+            background: #eef5ff;
             display: flex;
-            flex-direction: column;
+            align-items: center;
             justify-content: center;
+            margin: auto auto 20px;
+            font-size: 30px;
+            color: #0b5ed7;
         }
-
-        .login-title {
-            font-weight: 800;
-            color: var(--dark-blue);
-        }
-
-        .form-label {
-            font-weight: 600;
-        }
-
         .form-control {
             border-radius: 14px;
-            padding: 12px 14px;
+            padding: 14px 16px;
         }
-
-        .btn-main {
-            background: linear-gradient(90deg, var(--primary-blue), var(--green));
-            color: white;
+        .btn-login {
+            width: 100%;
             border: none;
+            padding: 14px;
             border-radius: 999px;
-            padding: 11px 24px;
+            background: linear-gradient(90deg, #0b5ed7, #12b886);
+            color: #fff;
             font-weight: 700;
-            transition: 0.25s ease;
         }
-
-        .btn-main:hover {
-            color: white;
-            opacity: 0.92;
-            transform: translateY(-2px);
-        }
-
         .btn-back {
+            width: 100%;
+            margin-top: 12px;
             border-radius: 999px;
-            padding: 11px 24px;
-            font-weight: 700;
         }
-
-        .alert {
-            border: none;
-            border-radius: 14px;
-            padding: 10px 14px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .demo-simple {
-            margin-top: 16px;
-            font-size: 12.5px;
-            color: #64748b;
-            line-height: 1.7;
-        }
-
-        .demo-simple strong {
-            color: #0b315f;
-        }
-
-        @media (max-width: 768px) {
-            .login-left {
-                min-height: auto;
-                padding: 34px;
-                border-bottom-left-radius: 0;
-                border-top-right-radius: 30px;
+        @media(max-width: 992px) {
+            .left {
+                display: none;
             }
-
-            .login-right {
-                padding: 34px;
-            }
-
-            .brand-title {
-                font-size: 34px;
-            }
-
-            .btn-main,
-            .btn-back {
-                width: 100%;
-            }
-
-            .demo-row {
-                display: block;
-            }
-
-            .demo-account {
-                text-align: left;
-                margin-top: 3px;
+            .right {
+                padding: 40px 28px;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="container login-container">
-    <div class="login-wrapper">
-        <div class="row g-0">
-            <div class="col-md-5">
-                <div class="login-left">
-                    <h1 class="brand-title">SIKAREMA</h1>
-
-                    <p class="brand-text mt-3 mb-0">
-                        Sistem Pengajuan Prestasi dan Klaim Reward Mahasiswa.
-                        Masuk sesuai hak akses untuk mengelola atau mengajukan data prestasi.
-                    </p>
-                </div>
+<div class="wrapper">
+    <div class="row g-0">
+        
+        <div class="col-lg-6">
+            <div class="left">
+                <img class="logo" src="{{ asset('images/logo-putih.png') }}" alt="SIKAREMA">
+                <h1 style="font-size:52px; font-weight:800; line-height:1.15;">
+                    Apresiasi Prestasi,<br>Raih Reward Terbaik
+                </h1>
+                <p style="margin-top:20px; font-size:18px; line-height:1.8;">
+                    Masuk ke SIKAREMA untuk mengelola pengajuan prestasi dan proses klaim reward mahasiswa secara mudah dan terintegrasi.
+                </p>
+                <img class="trophy" src="{{ asset('images/trophy.png') }}" alt="Trophy">
             </div>
-
-            <div class="col-md-7">
-                <div class="login-right">
-                    <h3 class="login-title mb-2">Login Akun</h3>
-
-                    <p class="text-muted mb-4">
-                        Masukkan email dan password untuk melanjutkan.
-                    </p>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="right">
+                <div class="login-card">
+                    
+                    <div class="avatar">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    
+                    <h3 class="text-center fw-bold mb-2">Masuk ke SIKAREMA</h3>
+                    <p class="text-center text-muted mb-4">Masukkan email dan password untuk melanjutkan.</p>
 
                     @if(session('error'))
                         <div class="alert alert-danger">
@@ -228,11 +138,10 @@
                         </div>
                     @endif
 
-                    @if ($errors->any())
+                    @if($errors->any())
                         <div class="alert alert-danger">
-                            <strong>Terjadi kesalahan!</strong>
-                            <ul class="mb-0 mt-2">
-                                @foreach ($errors->all() as $error)
+                            <ul class="mb-0">
+                                @foreach($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
@@ -241,30 +150,25 @@
 
                     <form action="{{ route('login.process') }}" method="POST">
                         @csrf
-
+                        
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control" value="{{ old('email') }}" placeholder="Masukkan email" required>
+                            <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
                         </div>
-
+                        
                         <div class="mb-4">
                             <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Masukkan password" required>
+                            <input type="password" class="form-control" name="password" required>
                         </div>
-
-                        <div class="d-flex flex-wrap gap-2">
-                            <button type="submit" class="btn btn-main">
-                                Login
-                            </button>
-
-                            <a href="{{ url('/') }}" class="btn btn-secondary btn-back">
-                                Kembali ke Beranda
-                            </a>
-                        </div>
+                        
+                        <button type="submit" class="btn-login">Masuk</button>
+                        <a href="{{ url('/') }}" class="btn btn-outline-secondary btn-back">Kembali ke Beranda</a>
                     </form>
+
                 </div>
             </div>
         </div>
+        
     </div>
 </div>
 
