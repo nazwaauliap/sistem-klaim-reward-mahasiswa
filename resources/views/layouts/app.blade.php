@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIKAREMA — Apresiasi Prestasi, Raih Reward Terbaik</title>
+    <title>SIKAREMA — v.01</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/flatly/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -82,7 +82,7 @@
     left: 0;
     right: 0;
 
-    height: 90px;
+    height: 80px;
 
     display: flex;
     align-items: center;
