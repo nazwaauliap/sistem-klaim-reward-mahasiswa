@@ -41,5 +41,4 @@ class PrestasiMahasiswa extends Model
     {
         return $this->hasMany(KlaimReward::class, 'id_prestasi', 'id_prestasi');
     }
-    
 }
