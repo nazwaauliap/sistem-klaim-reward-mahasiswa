@@ -7,12 +7,13 @@ use App\Models\PrestasiMahasiswa;
 use App\Models\PeriodeKlaim;
 use App\Models\JenisReward;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MahasiswaKlaimRewardController extends Controller
 {
     public function index()
     {
-        $idMhs = auth()->user()->id_mhs;
+        $idMhs = Auth::user()->id_mhs;
 
         $klaimRewards = KlaimReward::with([
             'prestasiMahasiswa.mahasiswa',
@@ -31,7 +32,7 @@ class MahasiswaKlaimRewardController extends Controller
 
     public function create()
     {
-        $idMhs = auth()->user()->id_mhs;
+        $idMhs = Auth::user()->id_mhs;
 
         $prestasiTerverifikasi = PrestasiMahasiswa::with([
             'mahasiswa',
@@ -65,7 +66,7 @@ class MahasiswaKlaimRewardController extends Controller
             'id_reward' => 'required',
         ]);
 
-        $idMhs = auth()->user()->id_mhs;
+        $idMhs = Auth::user()->id_mhs;
 
         $prestasi = PrestasiMahasiswa::where('id_prestasi', $request->id_prestasi)
             ->where('id_mhs', $idMhs)
