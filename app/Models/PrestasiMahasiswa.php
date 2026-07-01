@@ -18,6 +18,8 @@ class PrestasiMahasiswa extends Model
         'juara',
         'file_sertifikat',
         'status_verifikasi',
+        'status_dosen',
+        'catatan_dosen',
     ];
 
     public function mahasiswa()

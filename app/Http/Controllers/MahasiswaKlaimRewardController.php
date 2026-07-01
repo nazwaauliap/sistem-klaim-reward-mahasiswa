@@ -42,7 +42,7 @@ class MahasiswaKlaimRewardController extends Controller
             ->orderBy('id_prestasi', 'desc')
             ->get();
 
-        $periodeDibuka = PeriodeKlaim::where('status', 'Dibuka')
+        $periodeDibuka = PeriodeKlaim::dibuka()
             ->orderBy('id_periode', 'desc')
             ->get();
 
@@ -79,7 +79,7 @@ class MahasiswaKlaimRewardController extends Controller
                 ->with('error', 'Prestasi belum terverifikasi, sehingga belum bisa diajukan klaim reward.');
         }
 
-        if ($periode->status !== 'Dibuka') {
+        if (!$periode->isOpen()) {
             return redirect()->back()
                 ->withInput()
                 ->with('error', 'Periode klaim sedang tidak dibuka.');
