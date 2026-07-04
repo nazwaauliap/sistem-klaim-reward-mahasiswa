@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🏆 SIKAREMA
+# 🏆 SIKAREMA 🏆
 ### Sistem Klaim Reward Prestasi Mahasiswa
 
 Platform berbasis **Laravel 13** yang digunakan untuk mengelola pengajuan prestasi mahasiswa, proses verifikasi, pengajuan klaim reward, hingga pencairan reward secara terintegrasi.
