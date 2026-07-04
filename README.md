@@ -100,12 +100,6 @@ POST /api/v1/logout
 
 ---
 
-# 📸 Tampilan Sistem
-
-> Tambahkan screenshot halaman utama, dashboard, dan halaman mahasiswa di sini.
-
----
-
 # ⚙️ Instalasi
 
 Clone repository
