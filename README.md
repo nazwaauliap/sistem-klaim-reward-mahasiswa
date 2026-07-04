@@ -69,7 +69,7 @@ Sistem ini dibangun menggunakan **Laravel 13** dengan arsitektur yang telah mend
 
 ---
 
-# 🚀 REST API
+# 🔥 REST API
 
 Backend telah menyediakan REST API menggunakan Laravel Sanctum yang siap digunakan oleh aplikasi mobile.
 
@@ -163,7 +163,7 @@ php artisan serve
 ## Mahasiswa
 
 ```
-Email    : mahasiswa@sikarema.test
+Email    : nazwa@sikarema.test
 Password : password
 ```
 
@@ -206,12 +206,6 @@ tests/
 
 ---
 
-# 🌍 Live Demo
-
-👉 https://sikarema.freedev.app
-
----
-
 # 📱 Roadmap
 
 - ✅ Website Laravel
@@ -225,11 +219,7 @@ tests/
 
 # 👨‍💻 Developer
 
-**Daffa Tiar**
-
-Teknik Informatika
-
-Universitas Muhammadiyah Banjarmasin
+**nazwaauliap**
 
 ---
 
