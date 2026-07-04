@@ -10,7 +10,7 @@ Platform berbasis **Laravel 13** yang digunakan untuk mengelola pengajuan presta
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?style=for-the-badge&logo=bootstrap)
 
-🌐 **Live Demo**
+🌐 **Live Demo (Desktop Only)**
 https://sikarema.freedev.app
 
 </div>
