@@ -1,122 +1,152 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="mb-4">
-    <h2 class="fw-bold">Proses Klaim Reward</h2>
-    <p class="text-muted">
-        Periksa data klaim reward mahasiswa, lalu ubah status klaimnya.
-    </p>
-</div>
-
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Terjadi kesalahan!</strong>
-        <ul class="mb-0 mt-2">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    <div class="mb-4">
+        <h2 class="fw-bold">Proses Klaim Reward</h2>
+        <p class="text-muted">
+            Periksa data klaim reward mahasiswa, lalu ubah status klaimnya.
+        </p>
     </div>
-@endif
 
-<div class="card page-card">
-    <div class="card-body p-4">
-        <h5 class="fw-bold mb-4">Detail Klaim Reward</h5>
-
-        <div class="row mb-3">
-            <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">Mahasiswa</label>
-                <input type="text" class="form-control"
-                       value="{{ $klaimReward->prestasiMahasiswa->mahasiswa->nim ?? '-' }} - {{ $klaimReward->prestasiMahasiswa->mahasiswa->nama ?? '-' }}"
-                       readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">Nama Prestasi</label>
-                <input type="text" class="form-control"
-                       value="{{ $klaimReward->prestasiMahasiswa->nama_kegiatan ?? '-' }}"
-                       readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">Kategori Prestasi</label>
-                <input type="text" class="form-control"
-                       value="{{ $klaimReward->prestasiMahasiswa->kategoriPrestasi->nama_kategori ?? '-' }}"
-                       readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">Tingkat Prestasi</label>
-                <input type="text" class="form-control"
-                       value="{{ $klaimReward->prestasiMahasiswa->tingkatPrestasi->nama_tingkat ?? '-' }}"
-                       readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">Periode Klaim</label>
-                <input type="text" class="form-control"
-                       value="{{ $klaimReward->periodeKlaim->nama_periode ?? '-' }}"
-                       readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">Jenis Reward</label>
-                <input type="text" class="form-control"
-                       value="{{ $klaimReward->jenisReward->nama_reward ?? '-' }}"
-                       readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">Nominal Reward</label>
-                <input type="text" class="form-control"
-                       value="Rp {{ number_format($klaimReward->jenisReward->nominal ?? 0, 0, ',', '.') }}"
-                       readonly>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label class="form-label fw-semibold">Tanggal Pengajuan</label>
-                <input type="text" class="form-control"
-                       value="{{ $klaimReward->tanggal_pengajuan }}"
-                       readonly>
-            </div>
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Terjadi kesalahan!</strong>
+            <ul class="mb-0 mt-2">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
+    @endif
 
-        <hr>
+    <div class="card page-card">
+        <div class="card-body p-4">
+            <h5 class="fw-bold mb-4">Detail Klaim Reward</h5>
 
-        <form action="{{ route('admin.klaim-reward.update', $klaimReward->id_klaim) }}" method="POST">
-            @csrf
-            @method('PUT')
+            <div class="row mb-3">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Mahasiswa</label>
+                    <input type="text" class="form-control"
+                        value="{{ $klaimReward->prestasiMahasiswa->mahasiswa->nim ?? '-' }} - {{ $klaimReward->prestasiMahasiswa->mahasiswa->nama ?? '-' }}"
+                        readonly>
+                </div>
 
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Status Klaim</label>
-                <select name="status_klaim" class="form-select" required>
-                    <option value="Menunggu" {{ old('status_klaim', $klaimReward->status_klaim) == 'Menunggu' ? 'selected' : '' }}>
-                        Menunggu
-                    </option>
-                    <option value="Disetujui" {{ old('status_klaim', $klaimReward->status_klaim) == 'Disetujui' ? 'selected' : '' }}>
-                        Disetujui
-                    </option>
-                    <option value="Ditolak" {{ old('status_klaim', $klaimReward->status_klaim) == 'Ditolak' ? 'selected' : '' }}>
-                        Ditolak
-                    </option>
-                </select>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Nama Prestasi</label>
+                    <input type="text" class="form-control"
+                        value="{{ $klaimReward->prestasiMahasiswa->nama_kegiatan ?? '-' }}" readonly>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Kategori Prestasi</label>
+                    <input type="text" class="form-control"
+                        value="{{ $klaimReward->prestasiMahasiswa->kategoriPrestasi->nama_kategori ?? '-' }}" readonly>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Tingkat Prestasi</label>
+                    <input type="text" class="form-control"
+                        value="{{ $klaimReward->prestasiMahasiswa->tingkatPrestasi->nama_tingkat ?? '-' }}" readonly>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Periode Klaim</label>
+                    <input type="text" class="form-control" value="{{ $klaimReward->periodeKlaim->nama_periode ?? '-' }}"
+                        readonly>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Jenis Reward</label>
+                    <input type="text" class="form-control" value="{{ $klaimReward->jenisReward->nama_reward ?? '-' }}"
+                        readonly>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Nominal Reward</label>
+                    <input type="text" class="form-control"
+                        value="Rp {{ number_format($klaimReward->jenisReward->nominal ?? 0, 0, ',', '.') }}" readonly>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-semibold">Tanggal Pengajuan</label>
+                    <input type="text" class="form-control" value="{{ $klaimReward->tanggal_pengajuan }}" readonly>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label class="form-label fw-semibold">Catatan</label>
-                <textarea name="catatan" class="form-control" rows="3" placeholder="Masukkan catatan jika diperlukan">{{ old('catatan', $klaimReward->catatan) }}</textarea>
-            </div>
+            <hr>
 
-            <div class="d-flex gap-2 mt-4">
-                <button type="submit" class="btn btn-main">
-                    Simpan Status Klaim
-                </button>
+            @if (isset($hasilFuzzy))
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3">🧠 Analisis Fuzzy Tsukamoto</h5>
 
-                <a href="{{ route('admin.klaim-reward.index') }}" class="btn btn-secondary rounded-pill px-4">
-                    Kembali
-                </a>
-            </div>
-        </form>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Skor Fuzzy</label>
+                                <div class="p-3 border rounded bg-light text-center">
+                                    <span class="fs-4 fw-bold">{{ $hasilFuzzy['skor'] }}</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Rekomendasi</label>
+                                <div class="p-3 border rounded bg-light text-center">
+                                    <span class="badge rounded-pill bg-success text-white px-3 py-2">
+                                        {{ $hasilFuzzy['rekomendasi'] }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Informasi</label>
+                                <div class="p-3 border rounded bg-light">
+                                    <p class="mb-1">Hasil ini merupakan rekomendasi sistem berdasarkan algoritma Fuzzy
+                                        Tsukamoto.</p>
+                                    <p class="mb-0">Keputusan akhir tetap berada pada Admin Prestasi.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <form action="{{ route('admin.klaim-reward.update', $klaimReward->id_klaim) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Status Klaim</label>
+                    <select name="status_klaim" class="form-select" required>
+                        <option value="Menunggu"
+                            {{ old('status_klaim', $klaimReward->status_klaim) == 'Menunggu' ? 'selected' : '' }}>
+                            Menunggu
+                        </option>
+                        <option value="Disetujui"
+                            {{ old('status_klaim', $klaimReward->status_klaim) == 'Disetujui' ? 'selected' : '' }}>
+                            Disetujui
+                        </option>
+                        <option value="Ditolak"
+                            {{ old('status_klaim', $klaimReward->status_klaim) == 'Ditolak' ? 'selected' : '' }}>
+                            Ditolak
+                        </option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Catatan</label>
+                    <textarea name="catatan" class="form-control" rows="3" placeholder="Masukkan catatan jika diperlukan">{{ old('catatan', $klaimReward->catatan) }}</textarea>
+                </div>
+
+                <div class="d-flex gap-2 mt-4">
+                    <button type="submit" class="btn btn-main">
+                        Simpan Status Klaim
+                    </button>
+
+                    <a href="{{ route('admin.klaim-reward.index') }}" class="btn btn-secondary rounded-pill px-4">
+                        Kembali
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 @endsection

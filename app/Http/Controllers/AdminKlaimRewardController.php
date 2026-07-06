@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KlaimReward;
+use App\Services\FuzzyRewardService;
 use Illuminate\Http\Request;
 
 class AdminKlaimRewardController extends Controller
@@ -31,7 +32,10 @@ class AdminKlaimRewardController extends Controller
             'jenisReward'
         ]);
 
-        return view('admin-klaim-reward.edit', compact('klaimReward'));
+        $hasilFuzzy = app(FuzzyRewardService::class)
+            ->calculate($klaimReward->prestasiMahasiswa);
+
+        return view('admin-klaim-reward.edit', compact('klaimReward', 'hasilFuzzy'));
     }
 
     public function update(Request $request, KlaimReward $klaimReward)
