@@ -157,28 +157,28 @@ php artisan serve
 ## Mahasiswa
 
 ```
-Email    : 2455201110017@sikarema.test
+Email    : 2455201110017@sikarema.univ.id
 Password : password
 ```
 
 ## Dosen
 
 ```
-Email    : dosen@sikarema.test
+Email    : dosen@sikarema.univ.id
 Password : password
 ```
 
 ## Admin
 
 ```
-Email    : admin@sikarema.test
+Email    : admin@sikarema.univ.id
 Password : password
 ```
 
 ## Super Admin
 
 ```
-Email    : superadmin@sikarema.test
+Email    : superadmin@sikarema.univ.id
 Password : password
 ```
 
