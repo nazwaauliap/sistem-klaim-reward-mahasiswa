@@ -157,7 +157,7 @@ php artisan serve
 ## Mahasiswa
 
 ```
-Email    : nazwa@sikarema.test
+Email    : 2455201110017@sikarema.test
 Password : password
 ```
 
