@@ -9,7 +9,6 @@ class FuzzyRewardService
 {
     public function calculate(PrestasiMahasiswa $prestasi)
     {
-        // Fuzzifikasi: ambil nilai numerik dari tingkat, kategori, dan juara
         $nilaiTingkat = $this->mapTingkat($prestasi->tingkatPrestasi->nama_tingkat);
         $nilaiKategori = $this->mapKategori($prestasi->kategoriPrestasi->nama_kategori);
         $nilaiJuara = $this->mapJuara($prestasi->juara);
@@ -20,15 +19,21 @@ class FuzzyRewardService
             'juara' => $nilaiJuara,
         ];
 
-        // Inferensi Tsukamoto: hitung alpha dan z untuk setiap rule
         $ruleOutputs = $this->inferensi($inputs);
-
-        // Defuzzifikasi: hitung skor akhir dengan rata-rata terbobot
         $skor = $this->defuzzifikasi($ruleOutputs);
 
         return [
             'skor' => round($skor, 2),
             'rekomendasi' => $this->determineRekomendasi($skor),
+            // untuk panel "Analisis Fuzzy Tsukamoto" di halaman Detail Klaim Reward
+            'trace' => [
+                'nilai_input' => $inputs,
+                'rule_aktif' => array_map(fn ($r) => [
+                    'alpha' => round($r['alpha'], 3),
+                    'output_set' => $r['output'],
+                    'z' => round($r['z'], 2),
+                ], $ruleOutputs),
+            ],
         ];
     }
 
@@ -73,41 +78,45 @@ class FuzzyRewardService
             return 40;
         }
 
-        if (preg_match('/\bjuara\s*(1|i)\b/', $normalized)) {
-            return 100;
+        // Alias kata ordinal Indonesia + numerik/romawi
+        $juara1 = ['1', 'i', 'pertama', 'satu', 'juara umum'];
+        $juara2 = ['2', 'ii', 'kedua', 'dua'];
+        $juara3 = ['3', 'iii', 'ketiga', 'tiga'];
+
+        foreach ($juara1 as $kw) {
+            if (preg_match('/\bjuara\s*' . preg_quote($kw, '/') . '\b/', $normalized) || str_contains($normalized, 'juara ' . $kw)) {
+                return 100;
+            }
+        }
+        foreach ($juara2 as $kw) {
+            if (preg_match('/\bjuara\s*' . preg_quote($kw, '/') . '\b/', $normalized)) {
+                return 80;
+            }
+        }
+        foreach ($juara3 as $kw) {
+            if (preg_match('/\bjuara\s*' . preg_quote($kw, '/') . '\b/', $normalized)) {
+                return 60;
+            }
         }
 
-        if (preg_match('/\bjuara\s*(2|ii)\b/', $normalized)) {
-            return 80;
-        }
-
-        if (preg_match('/\bjuara\s*(3|iii)\b/', $normalized)) {
-            return 60;
-        }
-
-        if (preg_match('/\b(1|i)\b/', $normalized) && str_contains($normalized, 'juara')) {
-            return 100;
-        }
-
-        if (preg_match('/\b(2|ii)\b/', $normalized) && str_contains($normalized, 'juara')) {
-            return 80;
-        }
-
-        if (preg_match('/\b(3|iii)\b/', $normalized) && str_contains($normalized, 'juara')) {
-            return 60;
-        }
+        // Fallback: catat sebagai warning agar admin tahu ada data juara
+        // yang tidak dikenali sistem, bukan diam-diam dianggap "rendah".
+        Log::warning('FuzzyRewardService: teks juara tidak dikenali, fallback ke nilai rendah', [
+            'juara_input' => $juara,
+        ]);
 
         return 20;
     }
 
     private function membershipRendah(float $nilai): float
     {
+        // domain 20–100, "rendah" turun linear dari 20 ke 60
         if ($nilai <= 20) {
             return 1.0;
         }
 
-        if ($nilai < 50) {
-            return (50 - $nilai) / 30;
+        if ($nilai < 60) {
+            return (60 - $nilai) / 40;
         }
 
         return 0.0;
@@ -115,25 +124,27 @@ class FuzzyRewardService
 
     private function membershipSedang(float $nilai): float
     {
-        if ($nilai <= 20 || $nilai >= 80) {
+        // segitiga simetris, puncak di 60 (mis. Provinsi / Juara-3)
+        if ($nilai <= 20 || $nilai >= 100) {
             return 0.0;
         }
 
-        if ($nilai < 50) {
-            return ($nilai - 20) / 30;
+        if ($nilai < 60) {
+            return ($nilai - 20) / 40;
         }
 
-        return (80 - $nilai) / 30;
+        return (100 - $nilai) / 40;
     }
 
     private function membershipTinggi(float $nilai): float
     {
-        if ($nilai <= 50) {
+        // "tinggi" naik linear dari 60 ke 100, penuh (1.0) HANYA di titik 100
+        if ($nilai <= 60) {
             return 0.0;
         }
 
-        if ($nilai < 80) {
-            return ($nilai - 50) / 30;
+        if ($nilai < 100) {
+            return ($nilai - 60) / 40;
         }
 
         return 1.0;
