@@ -517,23 +517,25 @@
         </aside>
 
         <main class="content">
-            <div class="topbar d-flex justify-content-between align-items-center">
-                <div>
-                    @php $dashboardRole = auth()->user()->hakAkses->nama_akses ?? ''; @endphp
-                    @if($dashboardRole === 'Super Admin')
-                        <h5 class="fw-bold mb-0">Dashboard Super Admin</h5>
-                        <small class="text-muted">Kelola manajemen sistem dan hak akses SIKAREMA.</small>
-                    @else
-                        <h5 class="fw-bold mb-0">Dashboard Admin</h5>
-                        <small class="text-muted">Kelola sistem pengajuan prestasi dan klaim reward mahasiswa.</small>
-                    @endif
-                </div>
-                <div class="text-end d-none d-md-block">
-                    <strong>{{ auth()->user()->name ?? 'Admin' }}</strong><br>
-                    <small class="text-muted">SIKAREMA</small>
-                </div>
+        <div class="topbar d-flex justify-content-between align-items-center">
+            <div>
+                @php $dashboardRole = auth()->user()->hakAkses->nama_akses ?? ''; @endphp
+                @if($dashboardRole === 'Super Admin')
+                    <h5 class="fw-bold mb-0">Dashboard Super Admin</h5>
+                    <small class="text-muted">Kelola manajemen sistem dan hak akses SIKAREMA.</small>
+                @elseif($dashboardRole === 'Dosen')
+                    <h5 class="fw-bold mb-0">Dashboard Dosen</h5>
+                    <small class="text-muted">Kelola proses verifikasi prestasi mahasiswa.</small>
+                @else
+                    <h5 class="fw-bold mb-0">Dashboard Admin</h5>
+                    <small class="text-muted">Kelola sistem pengajuan prestasi dan klaim reward mahasiswa.</small>
+                @endif
             </div>
-
+            <div class="text-end d-none d-md-block">
+                <strong>{{ auth()->user()->name ?? 'Admin' }}</strong><br>
+                <small class="text-muted">SIKAREMA</small>
+            </div>
+        </div>
             @yield('content')
         </main>
     </div>
